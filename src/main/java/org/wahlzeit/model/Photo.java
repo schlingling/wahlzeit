@@ -119,6 +119,7 @@ public class Photo extends DataObject {
 	public Photo() {
 		id = PhotoId.getNextId();
 		incWriteCount();
+		location = new Location();
 	}
 	
 	/**
@@ -127,10 +128,31 @@ public class Photo extends DataObject {
 	 */
 	public Photo(PhotoId myId) {
 		id = myId;
-		
+		location = new Location();
 		incWriteCount();
 	}
-	
+
+	/**
+	 *Constructor for init an Photo with given Coordinates
+	 * @methodtype constructor
+	 */
+	public Photo(double x, double y, double z) {
+		id = PhotoId.getNextId();
+		location = new Location(x,y,z);
+		incWriteCount();
+	}
+
+
+	/**
+	 *Constructor for init an Photo with given Coordinates and given id
+	 * @methodtype constructor
+	 */
+	public Photo(PhotoId myId, double x, double y, double z) {
+		id = myId;
+		location = new Location(x,y,z);
+		incWriteCount();
+	}
+
 	/**
 	 * 
 	 * @methodtype constructor
@@ -173,6 +195,8 @@ public class Photo extends DataObject {
 		creationTime = rset.getLong("creation_time");
 
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
+
+		location = new Location(rset.getLong("location_z"),rset.getLong("location_y"),rset.getLong("location_z"));
 	}
 	
 	/**
@@ -192,7 +216,10 @@ public class Photo extends DataObject {
 		rset.updateInt("status", status.asInt());
 		rset.updateInt("praise_sum", praiseSum);
 		rset.updateInt("no_votes", noVotes);
-		rset.updateLong("creation_time", creationTime);		
+		rset.updateLong("creation_time", creationTime);
+		rset.updateDouble("location_x", location.getCoordinateValue("x"));
+		rset.updateDouble("location_y", location.getCoordinateValue("y"));
+		rset.updateDouble("location_z", location.getCoordinateValue("z"));
 	}
 
 	/**

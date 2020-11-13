@@ -77,12 +77,27 @@ public class PhotoFactory {
 	public Photo createPhoto() {
 		return new Photo();
 	}
+
+	/**
+	 * @methodtype factory
+	 */
+	public Photo createPhoto(double x, double y, double z) {
+		return new Photo(x,y,z);
+	}
 	
 	/**
 	 * 
 	 */
 	public Photo createPhoto(PhotoId id) {
 		return new Photo(id);
+	}
+
+
+	/**
+	 *
+	 */
+	public Photo createPhoto(PhotoId id, double x, double y, double z) {
+		return new Photo(id,x,y,z);
 	}
 	
 	/**
