@@ -78,13 +78,7 @@ public class PhotoFactory {
 		return new Photo();
 	}
 
-	/**
-	 * @methodtype factory
-	 */
-	public Photo createPhoto(double x, double y, double z) {
-		return new Photo(x,y,z);
-	}
-	
+
 	/**
 	 * 
 	 */
@@ -92,14 +86,6 @@ public class PhotoFactory {
 		return new Photo(id);
 	}
 
-
-	/**
-	 *
-	 */
-	public Photo createPhoto(PhotoId id, double x, double y, double z) {
-		return new Photo(id,x,y,z);
-	}
-	
 	/**
 	 * 
 	 */

@@ -2,7 +2,7 @@ package org.wahlzeit.model;
 
 public class Location {
 
-    private Coordinate coordinate;
+    public Coordinate coordinate;
 
     /**
      *Instanciate Location with default-Coordinates x=0, y=0, z=0
@@ -20,6 +20,12 @@ public class Location {
         this.coordinate=new Coordinate(x,y,z);
     }
 
+
+
+
+
+
+
     /**
      *
      * @methodtype get
@@ -28,11 +34,61 @@ public class Location {
         return this.coordinate;
     }
 
+    /**
+     *
+     * @methodtype get
+     */
+    public double getX(){
+        return this.coordinate.getX();
+    }
+
 
     /**
-     *  Gets the coordinate-value choosed by picker coordinate (possible string-value: x,y,z)
-     * @methodtype constructor
+     *
+     * @methodtype get
      */
+    public double getY(){
+        return this.coordinate.getY();
+    }
+
+
+    /**
+     *
+     * @methodtype get
+     */
+    public double getZ(){
+        return this.coordinate.getZ();
+    }
+
+    public void setX(double x){
+        this.coordinate.setX(x);
+    }
+
+    public void setY(double y){
+        this.coordinate.setX(y);
+    }
+
+    public void setZ(double z){
+        this.coordinate.setX(z);
+    }
+
+
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(!(obj instanceof Location)||!(this instanceof Location)){
+            return false;
+        }
+        Location loc = (Location) obj;
+        return this.coordinate.equals(loc.coordinate);
+    }
+
+
+    /**
+
     public double getLocationCoordinateValue(String coordinate) {
         switch (coordinate){
             case "x":
@@ -47,10 +103,7 @@ public class Location {
     }
 
 
-    /**
-     *  Sets the Coordinate-Value choosed by the picker coordinate (Possbile string-values: x,y,z) to value
-     * @methodtype set
-     */
+
     public void setLocationCoordinateValue(String coordinate, double value) {
         switch (coordinate){
             case "x":
@@ -66,5 +119,9 @@ public class Location {
                 throw new IllegalArgumentException("Wrong Coordinate picker" + " Coodrinate: " + coordinate + " value: " + value);
         }
     }
+
+*/
+
+
 
 }

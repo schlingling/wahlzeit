@@ -58,8 +58,7 @@ public class Photo extends DataObject {
     public static final int MAX_THUMB_PHOTO_HEIGHT = 150;
 
 
-    public Location location;
-
+    public Location location = new Location();
 
     /**
      *
@@ -115,8 +114,6 @@ public class Photo extends DataObject {
     public Photo() {
         id = PhotoId.getNextId();
         incWriteCount();
-        location = new Location();
-        //location.setCoordinateValue("x",10);
     }
 
     /**
@@ -124,35 +121,10 @@ public class Photo extends DataObject {
      */
     public Photo(PhotoId myId) {
         id = myId;
-        location = new Location();
         incWriteCount();
-        //location.setCoordinateValue("x",10);
+        //location.setX(11);
     }
 
-    /**
-     * Constructor for init an Photo with given Coordinates
-     *
-     * @methodtype constructor
-     */
-    public Photo(double x, double y, double z) {
-        id = PhotoId.getNextId();
-        location = new Location(x, y, z);
-        //location.setCoordinateValue("x",10);
-        incWriteCount();
-    }
-
-
-    /**
-     * Constructor for init an Photo with given Coordinates and given id
-     *
-     * @methodtype constructor
-     */
-    public Photo(PhotoId myId, double x, double y, double z) {
-        id = myId;
-        location = new Location(x, y, z);
-        //location.setCoordinateValue("x",10);
-        incWriteCount();
-    }
 
     /**
      * Location Set bei by values from DB
@@ -220,9 +192,9 @@ public class Photo extends DataObject {
         rset.updateInt("praise_sum", praiseSum);
         rset.updateInt("no_votes", noVotes);
         rset.updateLong("creation_time", creationTime);
-        rset.updateDouble("location_x", location.getLocationCoordinateValue("x"));
-        rset.updateDouble("location_y", location.getLocationCoordinateValue("y"));
-        rset.updateDouble("location_z", location.getLocationCoordinateValue("z"));
+        rset.updateDouble("location_x", location.getX());
+        rset.updateDouble("location_y", location.getY());
+        rset.updateDouble("location_z", location.getZ());
     }
 
     /**

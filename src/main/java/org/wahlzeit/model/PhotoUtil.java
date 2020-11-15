@@ -48,18 +48,6 @@ public class PhotoUtil {
 		return result;
 	}
 
-	public static Photo createPhoto(File source, PhotoId id, double x, double y, double z) throws Exception {
-		Photo result = PhotoFactory.getInstance().createPhoto(id,x,y,z);
-
-		Image sourceImage = createImageFiles(source, id);
-
-		int sourceWidth = sourceImage.getWidth(null);
-		int sourceHeight = sourceImage.getHeight(null);
-		result.setWidthAndHeight(sourceWidth, sourceHeight);
-
-		return result;
-	}
-	
 	/**
 	 * 
 	 */

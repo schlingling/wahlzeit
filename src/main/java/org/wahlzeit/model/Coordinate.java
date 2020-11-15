@@ -109,13 +109,14 @@ public class Coordinate {
         return false;
     }
 
-    /**
-     * Compares if the Cartesion Coordiante coordinate is equal to this.coordinate with a maximum tolerance of 0.0000001
-     *
-     * @methodtype query
-     */
-    public boolean equals (Coordinate coordinate){
-        return isEqual(coordinate);
+    @Override
+    public boolean equals(Object obj) {
+
+        if(!(obj instanceof Coordinate)||!(this instanceof Coordinate)){
+            return false;
+        }
+        Coordinate cord = (Coordinate) obj;
+        return this.isEqual(cord);
     }
 
     /**
