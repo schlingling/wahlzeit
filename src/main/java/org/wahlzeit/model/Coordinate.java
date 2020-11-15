@@ -110,6 +110,15 @@ public class Coordinate {
     }
 
     /**
+     * Compares if the Cartesion Coordiante coordinate is equal to this.coordinate with a maximum tolerance of 0.0000001
+     *
+     * @methodtype query
+     */
+    public boolean equals (Coordinate coordinate){
+        return isEqual(coordinate);
+    }
+
+    /**
      * Compares two doubles with buffer-tolerance defined by epsilon
      *
      * @methodtype helper
