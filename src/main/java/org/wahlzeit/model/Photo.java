@@ -109,10 +109,6 @@ public class Photo extends DataObject {
 	protected long creationTime = System.currentTimeMillis();
 
 
-
-
-
-
 	/**
 	 * 
 	 */
@@ -120,6 +116,7 @@ public class Photo extends DataObject {
 		id = PhotoId.getNextId();
 		incWriteCount();
 		location = new Location();
+		//location.setCoordinateValue("x",10);
 	}
 	
 	/**
@@ -130,6 +127,7 @@ public class Photo extends DataObject {
 		id = myId;
 		location = new Location();
 		incWriteCount();
+		//location.setCoordinateValue("x",10);
 	}
 
 	/**
@@ -139,6 +137,7 @@ public class Photo extends DataObject {
 	public Photo(double x, double y, double z) {
 		id = PhotoId.getNextId();
 		location = new Location(x,y,z);
+		//location.setCoordinateValue("x",10);
 		incWriteCount();
 	}
 
@@ -150,11 +149,12 @@ public class Photo extends DataObject {
 	public Photo(PhotoId myId, double x, double y, double z) {
 		id = myId;
 		location = new Location(x,y,z);
+		//location.setCoordinateValue("x",10);
 		incWriteCount();
 	}
 
 	/**
-	 * 
+	 * Location Set bei by values from DB
 	 * @methodtype constructor
 	 */
 	public Photo(ResultSet rset) throws SQLException {
@@ -196,7 +196,7 @@ public class Photo extends DataObject {
 
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
 
-		location = new Location(rset.getLong("location_z"),rset.getLong("location_y"),rset.getLong("location_z"));
+		location = new Location(rset.getLong("location_x"),rset.getLong("location_y"),rset.getLong("location_z"));
 	}
 	
 	/**

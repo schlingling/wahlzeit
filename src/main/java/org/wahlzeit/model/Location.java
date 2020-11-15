@@ -29,6 +29,10 @@ public class Location {
     }
 
 
+    /**
+     *  Gets the coordinate-value choosed by picker coordinate (possible string-value: x,y,z)
+     * @methodtype constructor
+     */
     public double getCoordinateValue(String coordinate) {
         switch (coordinate){
             case "x":
@@ -43,21 +47,24 @@ public class Location {
     }
 
 
+    /**
+     *  Sets the Coordinate-Value choosed by the picker coordinate (Possbile string-values: x,y,z) to value
+     * @methodtype set
+     */
     public void setCoordinateValue(String coordinate, double value) {
         switch (coordinate){
             case "x":
                  this.coordinate.setX(value);
+                 break;
             case "y":
                  this.coordinate.setY(value);
+                break;
             case "z":
                  this.coordinate.setZ(value);
-
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong Coordinate picker" + " Coodrinate: " + coordinate + " value: " + value);
         }
-        throw new IllegalArgumentException("Wrong Coordinate picker");
     }
-
-    //TODO: getDistance() IMPL
-    //TODO: isEqual() IMPL
-    //TODO: Comment everything
 
 }
