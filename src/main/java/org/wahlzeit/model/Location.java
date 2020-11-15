@@ -24,7 +24,7 @@ public class Location {
      *
      * @methodtype get
      */
-    public Coordinate getCoordinate() {
+    public Coordinate getLocation() {
         return this.coordinate;
     }
 
@@ -33,7 +33,7 @@ public class Location {
      *  Gets the coordinate-value choosed by picker coordinate (possible string-value: x,y,z)
      * @methodtype constructor
      */
-    public double getCoordinateValue(String coordinate) {
+    public double getLocationCoordinateValue(String coordinate) {
         switch (coordinate){
             case "x":
                 return this.coordinate.getX();
@@ -51,7 +51,7 @@ public class Location {
      *  Sets the Coordinate-Value choosed by the picker coordinate (Possbile string-values: x,y,z) to value
      * @methodtype set
      */
-    public void setCoordinateValue(String coordinate, double value) {
+    public void setLocationCoordinateValue(String coordinate, double value) {
         switch (coordinate){
             case "x":
                  this.coordinate.setX(value);
