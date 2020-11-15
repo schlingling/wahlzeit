@@ -21,61 +21,6 @@ public class Location {
     }
 
 
-
-
-
-
-
-    /**
-     *
-     * @methodtype get
-     */
-    public Coordinate getLocation() {
-        return this.coordinate;
-    }
-
-    /**
-     *
-     * @methodtype get
-     */
-    public double getX(){
-        return this.coordinate.getX();
-    }
-
-
-    /**
-     *
-     * @methodtype get
-     */
-    public double getY(){
-        return this.coordinate.getY();
-    }
-
-
-    /**
-     *
-     * @methodtype get
-     */
-    public double getZ(){
-        return this.coordinate.getZ();
-    }
-
-    public void setX(double x){
-        this.coordinate.setX(x);
-    }
-
-    public void setY(double y){
-        this.coordinate.setX(y);
-    }
-
-    public void setZ(double z){
-        this.coordinate.setX(z);
-    }
-
-
-
-
-
     @Override
     public boolean equals(Object obj) {
 
