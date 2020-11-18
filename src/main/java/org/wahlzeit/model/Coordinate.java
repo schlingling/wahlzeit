@@ -1,5 +1,8 @@
 package org.wahlzeit.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Coordinate {
 
     private double x;
@@ -127,5 +130,13 @@ public class Coordinate {
     public static boolean compare(double a, double b, double epsilon) {
         return Math.abs(a - b) < epsilon;
     }
+
+
+    public void writeOn(ResultSet rset) throws SQLException {
+        rset.updateDouble("location_x", this.getX());
+        rset.updateDouble("location_y", this.getY());
+        rset.updateDouble("location_z", this.getZ());
+    }
+
 }
 

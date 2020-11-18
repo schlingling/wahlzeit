@@ -1,5 +1,8 @@
 package org.wahlzeit.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Location {
 
     public Coordinate coordinate;
@@ -32,40 +35,45 @@ public class Location {
     }
 
 
-    /**
-
-    public double getLocationCoordinateValue(String coordinate) {
-        switch (coordinate){
-            case "x":
-                return this.coordinate.getX();
-            case "y":
-                return this.coordinate.getY();
-            case "z":
-                return this.coordinate.getZ();
-
-        }
-    throw new IllegalArgumentException("Wrong Coordinate picker");
+    public void writeOn(ResultSet rset) throws SQLException {
+        this.coordinate.writeOn(rset);
     }
 
 
+        /**
 
-    public void setLocationCoordinateValue(String coordinate, double value) {
-        switch (coordinate){
-            case "x":
-                 this.coordinate.setX(value);
-                 break;
-            case "y":
-                 this.coordinate.setY(value);
-                break;
-            case "z":
-                 this.coordinate.setZ(value);
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong Coordinate picker" + " Coodrinate: " + coordinate + " value: " + value);
+        public double getLocationCoordinateValue(String coordinate) {
+            switch (coordinate){
+                case "x":
+                    return this.coordinate.getX();
+                case "y":
+                    return this.coordinate.getY();
+                case "z":
+                    return this.coordinate.getZ();
+
+            }
+        throw new IllegalArgumentException("Wrong Coordinate picker");
         }
-    }
 
-*/
+
+
+        public void setLocationCoordinateValue(String coordinate, double value) {
+            switch (coordinate){
+                case "x":
+                     this.coordinate.setX(value);
+                     break;
+                case "y":
+                     this.coordinate.setY(value);
+                    break;
+                case "z":
+                     this.coordinate.setZ(value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Wrong Coordinate picker" + " Coodrinate: " + coordinate + " value: " + value);
+            }
+        }
+
+    */
 
 
 
