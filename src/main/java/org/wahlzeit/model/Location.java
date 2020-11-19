@@ -1,9 +1,12 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.DataObject;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Location {
+public class Location extends DataObject {
 
     public Coordinate coordinate;
 
@@ -39,8 +42,23 @@ public class Location {
         return coordinate.hashCode();
     }
 
+    @Override
+    public String getIdAsString() {
+        return null;
+    }
+
+    @Override
+    public void readFrom(ResultSet rset) throws SQLException {
+        this.coordinate.readFrom(rset);
+    }
+
     public void writeOn(ResultSet rset) throws SQLException {
         this.coordinate.writeOn(rset);
+    }
+
+    @Override
+    public void writeId(PreparedStatement stmt, int pos) throws SQLException {
+        //doNothing
     }
 
 }

@@ -169,9 +169,8 @@ public class Photo extends DataObject {
 
         maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
 
-        location = new Location(rset.getLong("location_x"),
-                rset.getLong("location_y"),
-                rset.getLong("location_z"));
+        this.location.readFrom(rset);
+
     }
 
     /**
