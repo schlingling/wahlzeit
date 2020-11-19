@@ -123,12 +123,17 @@ public class Coordinate extends DataObject {
         return this.isEqual(cord);
     }
 
+    /**
+     * calculates hashCode from coordinates with 7 digits tolerance
+     *
+     * @methodtype query
+     */
     @Override
     public int hashCode() {
         int result = 17;
-        result = (int) (31*result+getX());
-        result = (int) (31*result+getY());
-        result = (int) (31*result+getZ());
+        result = (int) (31*result+rint(getX(),7));
+        result = (int) (31*result+rint(getY(),7));
+        result = (int) (31*result+rint(getZ(),7));
         return result;
 
     }
@@ -152,6 +157,7 @@ public class Coordinate extends DataObject {
         this.setX(rset.getDouble("location_x"));
         this.setY(rset.getDouble("location_y"));
         this.setZ(rset.getDouble("location_z"));
+
     }
 
     public void writeOn(ResultSet rset) throws SQLException {
@@ -163,6 +169,11 @@ public class Coordinate extends DataObject {
     @Override
     public void writeId(PreparedStatement stmt, int pos) throws SQLException {
             //doNothing
+    }
+
+    private double rint(double value, int decimalPoints) {
+        double d = Math.pow(10, decimalPoints);
+        return Math.rint(value * d) / d;
     }
 
 }
