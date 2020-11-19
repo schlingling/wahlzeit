@@ -34,47 +34,13 @@ public class Location {
         return this.coordinate.equals(loc.coordinate);
     }
 
+    @Override
+    public int hashCode() {
+        return coordinate.hashCode();
+    }
 
     public void writeOn(ResultSet rset) throws SQLException {
         this.coordinate.writeOn(rset);
     }
-
-
-        /**
-
-        public double getLocationCoordinateValue(String coordinate) {
-            switch (coordinate){
-                case "x":
-                    return this.coordinate.getX();
-                case "y":
-                    return this.coordinate.getY();
-                case "z":
-                    return this.coordinate.getZ();
-
-            }
-        throw new IllegalArgumentException("Wrong Coordinate picker");
-        }
-
-
-
-        public void setLocationCoordinateValue(String coordinate, double value) {
-            switch (coordinate){
-                case "x":
-                     this.coordinate.setX(value);
-                     break;
-                case "y":
-                     this.coordinate.setY(value);
-                    break;
-                case "z":
-                     this.coordinate.setZ(value);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Wrong Coordinate picker" + " Coodrinate: " + coordinate + " value: " + value);
-            }
-        }
-
-    */
-
-
 
 }

@@ -104,22 +104,30 @@ public class Coordinate {
             throw new IllegalArgumentException("Coordinate c must be set to a value");
         }
 
-        if (compare(this.getX(), coordinate.getX(), 0.0000001) &&
+        return (compare(this.getX(), coordinate.getX(), 0.0000001) &&
                 compare(this.getY(), coordinate.getY(), 0.0000001) &&
-                compare(this.getZ(), coordinate.getZ(), 0.0000001)) {
-            return true;
-        }
-        return false;
+                compare(this.getZ(), coordinate.getZ(), 0.0000001));
+
     }
 
     @Override
     public boolean equals(Object obj) {
 
-        if(!(obj instanceof Coordinate)||!(this instanceof Coordinate)){
+        if (!(obj instanceof Coordinate) || !(this instanceof Coordinate)) {
             return false;
         }
         Coordinate cord = (Coordinate) obj;
         return this.isEqual(cord);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = (int) (31*result+getX());
+        result = (int) (31*result+getY());
+        result = (int) (31*result+getZ());
+        return result;
+
     }
 
     /**
