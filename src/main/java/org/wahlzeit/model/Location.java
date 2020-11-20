@@ -11,26 +11,81 @@ public class Location extends DataObject {
     public Coordinate coordinate;
 
     /**
-     *Instanciate Location with default-Coordinates x=0, y=0, z=0
+     * Instanciate Location with default-Coordinates x=0, y=0, z=0
+     *
      * @methodtype constructor
      */
-    public Location (){
-        this.coordinate=new Coordinate();
+    public Location() {
+        this.coordinate = new Coordinate();
     }
 
     /**
-     *  Instanciate Location with specific Coordinates
+     * Instanciate Location with specific Coordinates
+     *
      * @methodtype constructor
      */
-    public Location (double x, double y, double z){
-        this.coordinate=new Coordinate(x,y,z);
+    public Location(double x, double y, double z) {
+        this.coordinate = new Coordinate(x, y, z);
     }
 
 
-    @Override
+    /**
+     * @methodtype get
+     */
+    public double getX() {
+        return this.coordinate.getX();
+    }
+
+    /**
+     * @methodtype get
+     */
+    public double getY() {
+        return this.coordinate.getY();
+
+    }
+
+    /**
+     * @methodtype get
+     */
+    public double getZ() {
+        return this.coordinate.getZ();
+
+    }
+
+    /**
+     * @methodtype set
+     */
+    public void setX(double x) {
+        this.coordinate.setX(x);
+    }
+
+    /**
+     * @methodtype set
+     */
+    public void setY(double y) {
+        this.coordinate.setY(y);
+
+    }
+
+    /**
+     * @methodtype set
+     */
+    public void setZ(double z) {
+        this.coordinate.setZ(z);
+
+    }
+
+    public double getDistance(Location location) {
+        return this.coordinate.getDistance(location.coordinate);
+    }
+
+
+
+
+        @Override
     public boolean equals(Object obj) {
 
-        if(!(obj instanceof Location)||!(this instanceof Location)){
+        if (!(obj instanceof Location) || !(this instanceof Location)) {
             return false;
         }
         Location loc = (Location) obj;
@@ -60,5 +115,6 @@ public class Location extends DataObject {
     public void writeId(PreparedStatement stmt, int pos) throws SQLException {
         //doNothing
     }
+
 
 }
