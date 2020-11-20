@@ -119,11 +119,11 @@ public class LocationTest {
 
         //ACT --> Calculate Betrag des Ortsvektor
         cc1=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
-        cc2=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
-        cc3=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
-        cc4=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
-        cc5=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
-        cc6=Math.sqrt(Math.pow(l1.getX(), 2) + Math.pow(l1.getY(), 2) + Math.pow(l1.getZ(), 2));
+        cc2=Math.sqrt(Math.pow(l2.getX(), 2) + Math.pow(l2.getY(), 2) + Math.pow(l2.getZ(), 2));
+        cc3=Math.sqrt(Math.pow(l3.getX(), 2) + Math.pow(l3.getY(), 2) + Math.pow(l3.getZ(), 2));
+        cc4=Math.sqrt(Math.pow(l4.getX(), 2) + Math.pow(l4.getY(), 2) + Math.pow(l4.getZ(), 2));
+        cc5=Math.sqrt(Math.pow(l5.getX(), 2) + Math.pow(l5.getY(), 2) + Math.pow(l5.getZ(), 2));
+        cc6=Math.sqrt(Math.pow(l6.getX(), 2) + Math.pow(l6.getY(), 2) + Math.pow(l6.getZ(), 2));
 
 
         //ASSERT
@@ -132,7 +132,7 @@ public class LocationTest {
         assertEquals(cc3,new Location().getDistance(l3), 7);
         assertEquals(cc4,new Location().getDistance(l4), 7);
         assertEquals(cc5,new Location().getDistance(l5), 7);
-        assertEquals(cc5,new Location().getDistance(l6), 7);
+        assertEquals(cc6,new Location().getDistance(l6), 7);
 
     }
 

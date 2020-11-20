@@ -82,7 +82,7 @@ public class Location extends DataObject {
 
 
 
-        @Override
+    @Override
     public boolean equals(Object obj) {
 
         if (!(obj instanceof Location) || !(this instanceof Location)) {
