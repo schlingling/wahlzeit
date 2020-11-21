@@ -193,7 +193,7 @@ public class Photo extends DataObject {
         rset.updateInt("no_votes", noVotes);
         rset.updateLong("creation_time", creationTime);
         this.location.writeOn(rset);
-        rset.updateString("photoclass", String.valueOf(this.getClass()));
+
 
     }
 

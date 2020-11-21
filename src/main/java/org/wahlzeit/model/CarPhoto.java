@@ -73,5 +73,15 @@ public class CarPhoto extends Photo {
         buildYear=y;
     }
 
+    @Override
+    public void writeOn(ResultSet rset) throws SQLException {
+        super.writeOn(rset);
+        rset.updateString("photoclass", String.valueOf(this.getClass()));
+    }
 
+    @Override
+    public void readFrom(ResultSet rset) throws SQLException {
+        super.readFrom(rset);
+        //Hier könnte man ggf. die Attribute von CarPhoto lesen, aber kann eh nicht mitgegeben werden durch UI
+    }
 }
