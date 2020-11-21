@@ -12,10 +12,10 @@ import static org.junit.Assert.*;
 
 public class CarPhotoTest {
 
-    CarPhoto p1, p2, p3;
+    private CarPhoto p1, p2, p3;
 
     @Before
-    public void setupLocations() {
+    public void setupCarPhotos() {
 
         this.p1 = new CarPhoto();
         this.p2 = new CarPhoto();
