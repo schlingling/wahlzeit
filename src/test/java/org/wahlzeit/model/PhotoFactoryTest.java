@@ -17,7 +17,7 @@ public class PhotoFactoryTest {
     }
 
     @Test
-    public void testCorrectInstanceofPhotoManager(){
+    public void testCorrectInstanceofPhotoFactory(){
         //ARRANGE
         pf = PhotoFactory.getInstance();
 
