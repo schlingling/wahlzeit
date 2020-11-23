@@ -18,17 +18,14 @@ public class CarPhoto extends Photo {
      *
      */
     public CarPhoto() {
-        id = PhotoId.getNextId();
-        incWriteCount();
+        super();
     }
 
     /**
      * @methodtype constructor
      */
     public CarPhoto(PhotoId myId) {
-        id = myId;
-        incWriteCount();
-        //location.coordinate.setX(13);
+       super(myId);
 
     }
 
@@ -39,7 +36,7 @@ public class CarPhoto extends Photo {
      * @methodtype constructor
      */
     public CarPhoto(ResultSet rset) throws SQLException {
-        readFrom(rset);
+        super(rset);
     }
 
 
