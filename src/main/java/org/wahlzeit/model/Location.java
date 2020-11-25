@@ -17,7 +17,11 @@ public class Location extends DataObject {
      */
     public Location() {
         this.coordinate = new Coordinate();
+        incWriteCount();
     }
+
+
+
 
     /**
      * Instanciate Location with specific Coordinates
@@ -26,61 +30,22 @@ public class Location extends DataObject {
      */
     public Location(double x, double y, double z) {
         this.coordinate = new Coordinate(x, y, z);
+        incWriteCount();
     }
 
 
-    /**
-     * @methodtype get
-     */
-    public double getX() {
-        return this.coordinate.getX();
-    }
-
-    /**
-     * @methodtype get
-     */
-    public double getY() {
-        return this.coordinate.getY();
-
-    }
-
-    /**
-     * @methodtype get
-     */
-    public double getZ() {
-        return this.coordinate.getZ();
-
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setX(double x) {
-        this.coordinate.setX(x);
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setY(double y) {
-        this.coordinate.setY(y);
-
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setZ(double z) {
-        this.coordinate.setZ(z);
-
-    }
-
-    public double getDistance(Location location) {
-        return this.coordinate.getDistance(location.coordinate);
+    public Coordinate getCoordinate(){
+        return this.coordinate;
     }
 
 
+    @Override
+    public boolean isDirty(){
+        boolean selfDirty = this.writeCount != 0;
+        boolean coordinateDirty = this.coordinate.isDirty();
 
+        return selfDirty || coordinateDirty;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -115,6 +80,7 @@ public class Location extends DataObject {
     public void writeId(PreparedStatement stmt, int pos) throws SQLException {
         //doNothing
     }
+
 
 
 }
