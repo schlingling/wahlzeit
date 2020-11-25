@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Location extends DataObject {
 
-    public Coordinate coordinate;
+    public CartesianCoordinate coordinate;
 
     /**
      * Instanciate Location with default-Coordinates x=0, y=0, z=0
@@ -16,10 +16,9 @@ public class Location extends DataObject {
      * @methodtype constructor
      */
     public Location() {
-        this.coordinate = new Coordinate();
+        this.coordinate = new CartesianCoordinate();
         incWriteCount();
     }
-
 
 
 
@@ -29,7 +28,7 @@ public class Location extends DataObject {
      * @methodtype constructor
      */
     public Location(double x, double y, double z) {
-        this.coordinate = new Coordinate(x, y, z);
+        this.coordinate = new CartesianCoordinate(x,y,z);
         incWriteCount();
     }
 
