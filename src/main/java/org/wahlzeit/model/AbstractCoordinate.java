@@ -78,4 +78,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         return Math.rint(value * d) / d;
     }
 
+
+    //TODO: assertNotNull-Methode hier implementieren
+
 }
