@@ -6,11 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CartesianCoordinate extends DataObject implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate  {
 
     private double x;
     private double y;
     private double z;
+
 
     /**
      * Instanciate Coordinate.java with default values x=y=z=0
@@ -97,34 +98,14 @@ public class CartesianCoordinate extends DataObject implements Coordinate {
         return distance;
     }
 
-    /**
-     * Compares if the Cartesion Coordiante coordinate is equal to this.coordinate with a maximum tolerance of 0.0000001
-     *
-     * @methodtype query
-     */
-    public boolean isEqual(CartesianCoordinate coordinate) {
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Coordinate.java c must be set to a value");
-        }
-
-        return (compare(this.getX(), coordinate.getX(), 0.0000001) &&
-                compare(this.getY(), coordinate.getY(), 0.0000001) &&
-                compare(this.getZ(), coordinate.getZ(), 0.0000001));
-
-    }
-
-    public boolean isEqual(Coordinate coordinate) {
-        return isEqual(coordinate);
-
-    }
 
     @Override
     public boolean equals(Object obj) {
 
-        if (!(obj instanceof Coordinate) || !(this instanceof Coordinate)) {
+        if (!(obj instanceof CartesianCoordinate) || !(this instanceof CartesianCoordinate)) {
             return false;
         }
-        Coordinate cord = (Coordinate) obj;
+        CartesianCoordinate cord = (CartesianCoordinate) obj;
         return this.isEqual(cord);
     }
 
@@ -136,71 +117,69 @@ public class CartesianCoordinate extends DataObject implements Coordinate {
     @Override
     public int hashCode() {
         int result = 17;
-        result = (int) (31*result+rint(getX(),7));
-        result = (int) (31*result+rint(getY(),7));
-        result = (int) (31*result+rint(getZ(),7));
+        result = (int) (31*result+rint(getX(),NACHKOMMASTELLEN));
+        result = (int) (31*result+rint(getY(),NACHKOMMASTELLEN));
+        result = (int) (31*result+rint(getZ(),NACHKOMMASTELLEN));
         return result;
 
     }
 
-    /**
-     * Compares two doubles with buffer-tolerance defined by epsilon
-     *
-     * @methodtype helper
-     */
-    public static boolean compare(double a, double b, double epsilon) {
-        return Math.abs(a - b) < epsilon;
-    }
-
-    @Override
-    public String getIdAsString() {
-        return null;
-    }
-
-    @Override
-    public void readFrom(ResultSet rset) throws SQLException {
-        this.setX(rset.getDouble("location_x"));
-        this.setY(rset.getDouble("location_y"));
-        this.setZ(rset.getDouble("location_z"));
-
-    }
-
-    public void writeOn(ResultSet rset) throws SQLException {
-        rset.updateDouble("location_x", this.getX());
-        rset.updateDouble("location_y", this.getY());
-        rset.updateDouble("location_z", this.getZ());
-    }
-
-    @Override
-    public void writeId(PreparedStatement stmt, int pos) throws SQLException {
-            //doNothing
-    }
-
-    private double rint(double value, int decimalPoints) {
-        double d = Math.pow(10, decimalPoints);
-        return Math.rint(value * d) / d;
-    }
 
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
-        return null;
+        return this;
     }
 
-    @Override
-    public double getCartesianDistance() {
-        return 0;
-    }
 
     @Override
     public SphericCoordinate asSphericCoordinate() {
+        //TODO: Umrechnung
+
         return null;
     }
 
+
+
+
+
     @Override
-    public double getCentralAngel(Coordinate coordinate) {
+    public double doGetCartesianDistance() {
         return 0;
     }
 
+
+    @Override
+    public double doGetCentralAngel(Coordinate coordinate) {
+        return 0;
+    }
+
+
+    @Override
+    protected boolean doIsEqual(Coordinate coordinate) {
+        CartesianCoordinate c = coordinate.asCartesianCoordinate();
+
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Coordinate.java c must be set to a value");
+        }
+
+        return (compare(this.getX(), c.getX(), DELTA) &&
+                compare(this.getY(), c.getY(), DELTA) &&
+                compare(this.getZ(), c.getZ(), DELTA));
+    }
+
+    @Override
+    protected void doReadFrom(ResultSet resultSet) throws SQLException {
+        this.setX(resultSet.getDouble("location_x"));
+        this.setY(resultSet.getDouble("location_y"));
+        this.setZ(resultSet.getDouble("location_z"));
+    }
+
+    @Override
+    protected void doWriteOn(ResultSet resultSet) throws SQLException {
+        resultSet.updateDouble("location_x", this.getX());
+        resultSet.updateDouble("location_y", this.getY());
+        resultSet.updateDouble("location_z", this.getZ());
+    }
 
 }
 
