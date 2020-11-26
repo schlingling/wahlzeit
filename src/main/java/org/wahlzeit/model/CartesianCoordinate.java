@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CartesianCoordinate extends AbstractCoordinate  {
+public class CartesianCoordinate extends AbstractCoordinate {
 
     private double x;
     private double y;
@@ -116,10 +116,11 @@ public class CartesianCoordinate extends AbstractCoordinate  {
      */
     @Override
     public int hashCode() {
+        //TODO: ggf in abstrakter Klasse definieren
         int result = 17;
-        result = (int) (31*result+rint(getX(),NACHKOMMASTELLEN));
-        result = (int) (31*result+rint(getY(),NACHKOMMASTELLEN));
-        result = (int) (31*result+rint(getZ(),NACHKOMMASTELLEN));
+        result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
+        result = (int) (31 * result + rint(getY(), NACHKOMMASTELLEN));
+        result = (int) (31 * result + rint(getZ(), NACHKOMMASTELLEN));
         return result;
 
     }
@@ -133,29 +134,22 @@ public class CartesianCoordinate extends AbstractCoordinate  {
 
     @Override
     public SphericCoordinate asSphericCoordinate() {
-        //TODO: Umrechnung
 
-        return null;
-    }
+        double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
+        double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
+        double radius; //Distance from origin
 
+        phi = Math.atan2(this.getY(), this.getX());
+        theta = Math.atan((Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)) / this.getZ()));
+        radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
 
-
-
-
-    @Override
-    public double doGetCartesianDistance() {
-        return 0;
-    }
-
-
-    @Override
-    public double doGetCentralAngel(Coordinate coordinate) {
-        return 0;
+        return new SphericCoordinate(phi, theta, radius);
     }
 
 
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
+        //TODO: ggf in abstrakter Klasse definieren
         CartesianCoordinate c = coordinate.asCartesianCoordinate();
 
         if (coordinate == null) {

@@ -50,13 +50,14 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         //donothing
     }
 
-
-
-    public abstract double doGetCartesianDistance();
-    public abstract double doGetCentralAngel(Coordinate coordinate);
-    protected abstract boolean doIsEqual(Coordinate coordinate);
-    protected abstract void doReadFrom(ResultSet resultSet) throws SQLException;
-    protected abstract void doWriteOn(ResultSet resultSet) throws SQLException;
+    public  double doGetCartesianDistance(){
+        //TODO: Impl
+        return 0;
+    };
+    public  double doGetCentralAngel(Coordinate coordinate){
+        //TODO: Impl
+        return 0;
+    }
 
 
     /**
@@ -77,6 +78,15 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         double d = Math.pow(10, decimalPoints);
         return Math.rint(value * d) / d;
     }
+
+
+
+    protected abstract boolean doIsEqual(Coordinate coordinate);
+    protected abstract void doReadFrom(ResultSet resultSet) throws SQLException;
+    protected abstract void doWriteOn(ResultSet resultSet) throws SQLException;
+
+
+
 
 
     //TODO: assertNotNull-Methode hier implementieren

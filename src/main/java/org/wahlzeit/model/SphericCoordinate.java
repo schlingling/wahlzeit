@@ -9,9 +9,12 @@ import java.util.Objects;
 
 public class SphericCoordinate extends AbstractCoordinate{
 
-    private double phi;
-    private double theta;
-    private double radius;
+
+    //PHYSICAL REPRESENTATION  representation of Spherical coordinates
+    //ATTENTION: NOT MATHEMATICAL REPRESENTATION --> phi and tetha NOT swapped (https://en.wikipedia.org/wiki/Spherical_coordinate_system)
+    private double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
+    private double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
+    private double radius; //Distance from origin
 
 
     public SphericCoordinate() {
@@ -68,29 +71,31 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
 
+    /**
+     * Transforms Coordinate to CartesianCoordinate
+     * @methodtype query
+     * @return CartesianCoordinate
+     */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
-        return null;
+
+        double x = getRadius()*Math.sin(getTheta())*Math.cos(getPhi());
+        double y = getRadius()*Math.sin(getTheta())*Math.sin(getPhi());
+        double z = getRadius()*Math.cos(getTheta());
+
+        return new CartesianCoordinate(x,y,z);
     }
 
+    /**
+     * Transforms Coordinate to SphericCoordinate
+     * @methodtype query
+     * @return spericCoordinate
+     */
     @Override
     public SphericCoordinate asSphericCoordinate() {
-        return null;
+        return this;
     }
 
-
-
-
-
-    @Override
-    public double doGetCartesianDistance() {
-        return 0;
-    }
-
-    @Override
-    public double doGetCentralAngel(Coordinate coordinate) {
-        return 0;
-    }
 
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
@@ -99,12 +104,16 @@ public class SphericCoordinate extends AbstractCoordinate{
 
     @Override
     protected void doReadFrom(ResultSet resultSet) throws SQLException {
-
+        this.setPhi(resultSet.getDouble("location_phi"));
+        this.setTheta(resultSet.getDouble("location_theta"));
+        this.setRadius(resultSet.getDouble("location_radius"));
     }
 
     @Override
     protected void doWriteOn(ResultSet resultSet) throws SQLException {
-
+        resultSet.updateDouble("location_phi", this.getPhi());
+        resultSet.updateDouble("location_theta", this.getTheta());
+        resultSet.updateDouble("location_radius", this.getRadius());
     }
 
 
