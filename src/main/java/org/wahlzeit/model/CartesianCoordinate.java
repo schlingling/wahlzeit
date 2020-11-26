@@ -1,8 +1,6 @@
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.DataObject;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -19,9 +17,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
     public CartesianCoordinate() {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
+        setX(0);
+        setY(0);
+        setZ(0);
     }
 
 
@@ -79,7 +77,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     /**
-     * Calculates the distance between Cartesian Coordinate.java coordinate and this.coordiante
+     * Calculates the distance between CartesianCoordinatecoordinate and this
      *
      * @methodtype query
      */
@@ -99,16 +97,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 
-    @Override
-    public boolean equals(Object obj) {
-
-        if (!(obj instanceof CartesianCoordinate) || !(this instanceof CartesianCoordinate)) {
-            return false;
-        }
-        CartesianCoordinate cord = (CartesianCoordinate) obj;
-        return this.isEqual(cord);
-    }
-
     /**
      * calculates hashCode from coordinates with 7 digits tolerance
      *
@@ -116,7 +104,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     @Override
     public int hashCode() {
-        //TODO: ggf in abstrakter Klasse definieren
         int result = 17;
         result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getY(), NACHKOMMASTELLEN));
@@ -126,50 +113,80 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 
-    @Override
+    /**
+     * calculates CartesianCoordinatte from coordinates with 7 digits tolerance
+     *
+     * @methodtype query
+     */
     public CartesianCoordinate asCartesianCoordinate() {
         return this;
     }
 
 
-    @Override
+    /**
+     * calculates Spheric coordinate from coordinates with 7 digits tolerance
+     *
+     * @methodtype query
+     */
     public SphericCoordinate asSphericCoordinate() {
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
         double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
         double radius; //Distance from origin
 
+        double x, y, z;
+
+
         phi = Math.atan2(this.getY(), this.getX());
-        theta = Math.atan((Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)) / this.getZ()));
+        if (this.getZ() != 0) {
+            theta = Math.atan(
+                    (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
+                            / this.getZ());
+        } else {
+            theta = 0;
+        }
+
         radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
 
         return new SphericCoordinate(phi, theta, radius);
     }
 
 
+    /**
+     * Checks wether this is equal to coordinate
+     *
+     * @methodtype query
+     */
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
-        //TODO: ggf in abstrakter Klasse definieren
         CartesianCoordinate c = coordinate.asCartesianCoordinate();
-
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Coordinate.java c must be set to a value");
-        }
-
         return (compare(this.getX(), c.getX(), DELTA) &&
                 compare(this.getY(), c.getY(), DELTA) &&
                 compare(this.getZ(), c.getZ(), DELTA));
     }
 
+
+    /**
+     * Reads coordinates from database
+     *
+     * @methodtype mutation
+     */
     @Override
-    protected void doReadFrom(ResultSet resultSet) throws SQLException {
+    public void readFrom(ResultSet resultSet) throws SQLException {
+        assertArgumentNotNull(resultSet);
         this.setX(resultSet.getDouble("location_x"));
         this.setY(resultSet.getDouble("location_y"));
         this.setZ(resultSet.getDouble("location_z"));
     }
 
+    /**
+     * Writes coordinates to database
+     *
+     * @methodtype mutation
+     */
     @Override
-    protected void doWriteOn(ResultSet resultSet) throws SQLException {
+    public void writeOn(ResultSet resultSet) throws SQLException {
+        assertArgumentNotNull(resultSet);
         resultSet.updateDouble("location_x", this.getX());
         resultSet.updateDouble("location_y", this.getY());
         resultSet.updateDouble("location_z", this.getZ());

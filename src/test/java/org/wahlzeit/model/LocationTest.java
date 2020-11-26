@@ -42,12 +42,12 @@ public class LocationTest {
 
 
     //TODO: Einkommentieren
-    /**
+
     @Test
     public void testSuperClass(){
-        assertTrue(CartesianCoordinate.class.getSuperclass() == DataObject.class);
+        assertTrue(AbstractCoordinate.class.getSuperclass() == DataObject.class);
     }
-     */
+
 
     @Test
     public void testLocationCoordinateNotNull() {
@@ -66,14 +66,16 @@ public class LocationTest {
         assertTrue(loc.isDirty());
     }
 
-    /**
+
     @Test
     public void testLocationEqualsOther() {
         //arrange
         other_loc = new Location();
         //act
         //assert
-        assertTrue(loc.equals(other_loc));
+
+        boolean test = loc.equals(other_loc);
+        assertTrue(test);
     }
 
     @Test
@@ -84,7 +86,7 @@ public class LocationTest {
         //assert
         assertFalse(loc.equals(other_loc));
     }
-*/
+
 
     //TODO: Code wieder einkommentieren
 

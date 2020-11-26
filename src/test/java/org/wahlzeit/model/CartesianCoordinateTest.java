@@ -137,7 +137,7 @@ public class CartesianCoordinateTest {
 
     }
 
-/**
+
     @Test
     public void testEqualMethods(){
 
@@ -171,7 +171,7 @@ public class CartesianCoordinateTest {
     }
 
 
-*/
+
 
 //TODO: Code wieder einkommentieren
 

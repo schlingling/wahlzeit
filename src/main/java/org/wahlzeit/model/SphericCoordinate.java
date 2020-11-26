@@ -1,13 +1,9 @@
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.DataObject;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 
-public class SphericCoordinate extends AbstractCoordinate{
+public class SphericCoordinate extends AbstractCoordinate {
 
 
     //PHYSICAL REPRESENTATION  representation of Spherical coordinates
@@ -17,79 +13,96 @@ public class SphericCoordinate extends AbstractCoordinate{
     private double radius; //Distance from origin
 
 
+    /**
+     * Instanciate Coordinate.java with default values phi=theta=radius=0
+     *
+     * @methodtype constructor
+     */
     public SphericCoordinate() {
         this.setPhi(0);
         this.setRadius(0);
         this.setTheta(0);
     }
 
+    /**
+     * Instanciate Location with specific values phi, theta, radius
+     *
+     * @methodtype constructor
+     */
 
-    public SphericCoordinate(double phi,  double theta, double radius) {
+    public SphericCoordinate(double phi, double theta, double radius) {
+        assertArgumentisCastableToRadiant(phi);
+        assertArgumentisCastableToRadiant(theta);
         this.setPhi(phi);
         this.setTheta(theta);
         this.setRadius(radius);
 
     }
 
+    /**
+     * @methodtype set
+     */
     public void setPhi(double phi) {
         this.phi = phi;
     }
 
+    /**
+     * @methodtype set
+     */
     public void setTheta(double theta) {
         this.theta = theta;
     }
 
+    /**
+     * @methodtype set
+     */
     public void setRadius(double radius) {
         this.radius = radius;
     }
 
+    /**
+     * @methodtype get
+     */
     public double getPhi() {
         return this.phi;
     }
 
+    /**
+     * @methodtype get
+     */
     public double getRadius() {
         return this.radius;
     }
 
+    /**
+     * @methodtype get
+     */
     public double getTheta() {
         return this.theta;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SphericCoordinate c = (SphericCoordinate) o;
-        return (compare(this.getPhi(), c.getPhi(), DELTA) &&
-                compare(this.getTheta(), c.getTheta(), DELTA) &&
-                compare(this.getRadius(), c.getRadius(), DELTA));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(phi, theta, radius); //andere Impl als in CartesianCoordinate
     }
 
 
     /**
      * Transforms Coordinate to CartesianCoordinate
-     * @methodtype query
+     *
      * @return CartesianCoordinate
+     * @methodtype query
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
 
-        double x = getRadius()*Math.sin(getTheta())*Math.cos(getPhi());
-        double y = getRadius()*Math.sin(getTheta())*Math.sin(getPhi());
-        double z = getRadius()*Math.cos(getTheta());
+        double x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
+        double y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
+        double z = getRadius() * Math.cos(getTheta());
 
-        return new CartesianCoordinate(x,y,z);
+        return new CartesianCoordinate(x, y, z);
     }
 
     /**
      * Transforms Coordinate to SphericCoordinate
-     * @methodtype query
+     *
      * @return spericCoordinate
+     * @methodtype query
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
@@ -97,24 +110,61 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
 
+    /**
+     * Checks wether this is equal to coordinate
+     *
+     * @methodtype query
+     */
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
-        return false;
+        SphericCoordinate c = coordinate.asSphericCoordinate();
+
+        boolean b1 = compare(this.getPhi(), c.getPhi(), DELTA);
+        boolean b2 = compare(this.getTheta(), c.getTheta(), DELTA);
+        boolean b3  =  compare(this.getRadius(), c.getRadius(), DELTA);
+
+        return (compare(this.getPhi(), c.getPhi(), DELTA) &&
+                compare(this.getTheta(), c.getTheta(), DELTA) &&
+                compare(this.getRadius(), c.getRadius(), DELTA));
     }
 
+    /**
+     * Reads coordinates from database
+     *
+     * @methodtype mutation
+     */
     @Override
-    protected void doReadFrom(ResultSet resultSet) throws SQLException {
+    public void readFrom(ResultSet resultSet) throws SQLException {
         this.setPhi(resultSet.getDouble("location_phi"));
         this.setTheta(resultSet.getDouble("location_theta"));
         this.setRadius(resultSet.getDouble("location_radius"));
     }
 
+    /**
+     * Reads coordinates from database
+     *
+     * @methodtype mutation
+     */
     @Override
-    protected void doWriteOn(ResultSet resultSet) throws SQLException {
+    public void writeOn(ResultSet resultSet) throws SQLException {
         resultSet.updateDouble("location_phi", this.getPhi());
         resultSet.updateDouble("location_theta", this.getTheta());
         resultSet.updateDouble("location_radius", this.getRadius());
     }
 
+    /**
+     * calculates hashCode from coordinates with 7 digits tolerance
+     *
+     * @methodtype query
+     */
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = (int) (31 * result + rint(getPhi(), NACHKOMMASTELLEN));
+        result = (int) (31 * result + rint(getTheta(), NACHKOMMASTELLEN));
+        result = (int) (31 * result + rint(getRadius(), NACHKOMMASTELLEN));
+        return result;
+
+    }
 
 }
