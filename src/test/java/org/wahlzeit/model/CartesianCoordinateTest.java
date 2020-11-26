@@ -126,7 +126,6 @@ public class CartesianCoordinateTest {
         cc5=Math.sqrt(Math.pow(c5.getX(), 2) + Math.pow(c5.getY(), 2) + Math.pow(c5.getZ(), 2));
         cc6=Math.sqrt(Math.pow(c6.getX(), 2) + Math.pow(c6.getY(), 2) + Math.pow(c6.getZ(), 2));
 
-
         //ASSERT
         assertEquals(cc1,new CartesianCoordinate().getDistance(c1), 7);
         assertEquals(cc2,new CartesianCoordinate().getDistance(c2), 7);
@@ -134,6 +133,8 @@ public class CartesianCoordinateTest {
         assertEquals(cc4,new CartesianCoordinate().getDistance(c4), 7);
         assertEquals(cc5,new CartesianCoordinate().getDistance(c5), 7);
         assertEquals(cc5,new CartesianCoordinate().getDistance(c6), 7);
+
+
 
     }
 
@@ -171,9 +172,6 @@ public class CartesianCoordinateTest {
     }
 
 
-
-
-//TODO: Code wieder einkommentieren
 
     @Test(expected = IllegalArgumentException.class)
     public void testWrongArgumentExceptions(){

@@ -31,8 +31,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public SphericCoordinate(double phi, double theta, double radius) {
-        assertArgumentisCastableToRadiant(phi);
-        assertArgumentisCastableToRadiant(theta);
+
         this.setPhi(phi);
         this.setTheta(theta);
         this.setRadius(radius);

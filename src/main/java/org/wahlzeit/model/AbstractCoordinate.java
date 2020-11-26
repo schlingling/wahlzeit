@@ -117,8 +117,6 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
         SphericCoordinate c1 = this.asSphericCoordinate();
         SphericCoordinate c2 = coordinate.asSphericCoordinate();
-        assertArgumentisCastableToRadiant(c2.getPhi());
-        assertArgumentisCastableToRadiant(c2.getTheta());
 
 
         double phiRadian1 = Math.toRadians(c1.getPhi());
@@ -176,13 +174,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         ;
     }
 
-    protected static void assertArgumentisCastableToRadiant(double value) throws IllegalArgumentException{
-        if (value<0){
-            throw new IllegalArgumentException("Value should be greater than 0");
-        }
 
-
-    }
 
     protected abstract boolean doIsEqual(Coordinate coordinate);
 
