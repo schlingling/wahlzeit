@@ -117,12 +117,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
         SphericCoordinate c = coordinate.asSphericCoordinate();
-
-        boolean b1 = compare(this.getPhi(), c.getPhi(), DELTA);
-        boolean b2 = compare(this.getTheta(), c.getTheta(), DELTA);
-        boolean b3  =  compare(this.getRadius(), c.getRadius(), DELTA);
-
-        return (compare(this.getPhi(), c.getPhi(), DELTA) &&
+                return (compare(this.getPhi(), c.getPhi(), DELTA) &&
                 compare(this.getTheta(), c.getTheta(), DELTA) &&
                 compare(this.getRadius(), c.getRadius(), DELTA));
     }

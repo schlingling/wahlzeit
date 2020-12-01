@@ -3,6 +3,7 @@ package org.wahlzeit.model;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import static  org.junit.Assert.*;
 
 public class CartesianCoordinateTest {
@@ -14,7 +15,7 @@ public class CartesianCoordinateTest {
 
 
     //different coordinates that are used multiple times in the test methods
-    private CartesianCoordinate c1,c2,c3,c4,c5,c6,cNull;
+    private CartesianCoordinate c1,c2,c3,c4,c5,c6,c7,cNull;
 
 
     @Before
@@ -28,6 +29,7 @@ public class CartesianCoordinateTest {
 
         this.c5 = new CartesianCoordinate(1, 1, 1);
         this.c6 = new CartesianCoordinate(-1, -1, -1);
+        this.c7 = new CartesianCoordinate(5, 5, 5);
 
         this.cNull = null;
 
@@ -68,6 +70,18 @@ public class CartesianCoordinateTest {
 
 
     @Test
+    public void testNotNull(){
+        //ARRANGE
+        //ACT
+
+        //ASSERT
+        assertNotNull(c1);
+        assertNotNull(c2);
+    }
+
+
+
+    @Test
     public void testSetter(){
 
         //ACT& ASSERT
@@ -94,6 +108,21 @@ public class CartesianCoordinateTest {
         assertEquals(this.c6.getX(),-1, DELTA);
         assertEquals(this.c6.getY(),-1, DELTA);
         assertEquals(this.c6.getZ(), -1,DELTA);
+    }
+
+
+    @Test
+    public void testConstructor(){
+        //ARRANGE
+        //ACT
+        double diff_x = Math.abs(c7.getX()-5);
+        double diff_y = Math.abs(c7.getY()-5);
+        double diff_z= Math.abs(c7.getZ()-5);
+
+        //ASSERT
+        assertTrue(diff_x<DELTA);
+        assertTrue(diff_y<DELTA);
+        assertTrue(diff_z<DELTA);
     }
 
 
@@ -170,6 +199,75 @@ public class CartesianCoordinateTest {
 
 
     }
+
+    @Test
+    public void testAsCartesianCoordinate(){
+
+        CartesianCoordinate cc = c2.asCartesianCoordinate();
+
+        double x_expected = cc.getX();
+        double y_expected  = cc.getY();
+        double z_expected  = cc.getZ();
+
+
+        //ASSERT
+        assertTrue(Math.abs(c2.getX())-Math.abs(x_expected)<DELTA);
+        assertTrue(Math.abs(c2.getY())-Math.abs(y_expected)<DELTA);
+        assertTrue(Math.abs(c2.getZ())-Math.abs(z_expected)<DELTA);
+    }
+
+    @Test
+    public void testAsSphericCoordinate(){
+        //ARRANGE
+        //ACT
+        SphericCoordinate sc = c2.asSphericCoordinate();
+
+        //http://www.calc3d.com/gjavascriptcoordcalc.html
+        double phi_expected = -0.5961336884644509;
+        double theta_expected = 1.2836720026236401;
+        double radius_expected = 4.355295996237424;
+
+        //ASSERT
+        assertTrue(Math.abs(sc.getPhi())-Math.abs(phi_expected)<DELTA);
+        assertTrue(Math.abs(sc.getTheta())-Math.abs(theta_expected)<DELTA);
+        assertTrue(Math.abs(sc.getRadius())-Math.abs(radius_expected)<DELTA);
+
+
+    }
+
+    @Test
+    public void testDoIsEqualSimple(){
+        //ARRANGE
+        CartesianCoordinate cc1 = new CartesianCoordinate();
+        CartesianCoordinate cc2 = new CartesianCoordinate();
+
+        //ACT
+        //ASSERT
+        assertTrue(cc1.doIsEqual(cc2));
+        assertTrue(cc2.doIsEqual(cc1));
+    }
+
+    @Test
+    public void testDoIsEqualComplex(){
+        //ARRANGE
+        CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
+
+        //ACT
+        //ASSERT
+        assertTrue(cc.doIsEqual(c7));
+        assertTrue(c7.doIsEqual(cc));
+    }
+
+    @Test
+    public void testNotDoIsEqualComplex(){
+        //ARRANGE
+        CartesianCoordinate cc = new CartesianCoordinate(5,6,5);
+
+        //ACT
+        //ASSERT
+        assertFalse(cc.doIsEqual(c2));
+    }
+
 
 
 
