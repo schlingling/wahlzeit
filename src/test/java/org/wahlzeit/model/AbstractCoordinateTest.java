@@ -29,6 +29,7 @@ public class AbstractCoordinateTest {
     @Test
     public void testGetCentralAngel(){
         //ARRANGE https://de.wikipedia.org/wiki/Orthodrome
+        //Check link for example
         SphericCoordinate s1 = new SphericCoordinate(52.517, 13.4, 3.5);
         SphericCoordinate s2 = new SphericCoordinate(35.7, 139.767, 3.5);
         double exp = 80.21;
