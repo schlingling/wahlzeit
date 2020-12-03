@@ -32,7 +32,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     @Override
     public double getCentralAngel(Coordinate coordinate) {
         assertArgumentNotNull(coordinate);
-        return doGetCentralAngel(coordinate);
+        return doGetCentralAngle(coordinate);
     }
 
 
@@ -102,11 +102,19 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @param coordinate
      * @return cartesian Distance between this and coordinate
      */
-    public double doGetCartesianDistance(Coordinate coordinate) {
+    protected double doGetCartesianDistance(Coordinate coordinate) {
         CartesianCoordinate c1 = this.asCartesianCoordinate();
         CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
         return c1.getDistance(c2);
     }
+
+    protected double doGetCentralAngle(Coordinate coordinate){
+        SphericCoordinate sc1 = this.asSphericCoordinate();
+        SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+        return sc1.doGetCentralAngel(sc2);
+    }
+
+
 
 
     @Override
@@ -114,58 +122,6 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         return doHashCode();
     }
 
-    /**
-     * @param coordinate
-     * @return centralAngel between this and coordinate by using Radians
-     */
-    public double doGetCentralAngel(Coordinate coordinate) {
-
-        SphericCoordinate c1 = this.asSphericCoordinate();
-        SphericCoordinate c2 = coordinate.asSphericCoordinate();
-
-
-        double phiRadian1 = Math.toRadians(c1.getPhi());
-        double thetaRadian1 = Math.toRadians(c1.getTheta());
-
-        double phiRadian2 = Math.toRadians(c2.getPhi());
-        double thetaRadian2 = Math.toRadians(c2.getTheta());
-
-        double deltaThetaRadian = Math.abs(Math.abs(thetaRadian1) - Math.abs(thetaRadian2));
-
-        double zähler = Math.sqrt(
-                Math.pow((Math.cos(phiRadian2) * Math.sin(deltaThetaRadian)), 2) +
-                        Math.pow(((Math.cos(phiRadian1) * Math.sin(phiRadian2)) - (Math.sin(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian))), 2));
-        double nenner = ((Math.sin(phiRadian1) * Math.sin(phiRadian2)) + (Math.cos(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian)));
-
-        double centralAngle;
-        if (nenner != 0) {
-            centralAngle = Math.atan(zähler / nenner);
-        } else {
-            throw new IllegalArgumentException("One of the coordinatevalues is 0; Division by 0 is forbidden");
-        }
-        return Math.toDegrees(centralAngle);
-
-        /**
-
-         Alternative Impl for testing issues
-         SphericCoordinate c1 = this.asSphericCoordinate();
-         SphericCoordinate c2 = coordinate.asSphericCoordinate();
-
-
-         double phiRadian1 = Math.toRadians(c1.getPhi());
-         double thetaRadian1 = Math.toRadians(c1.getTheta());
-
-         double phiRadian2 = Math.toRadians(c2.getPhi());
-         double thetaRadian2 = Math.toRadians(c2.getTheta());
-
-         double deltaThetaRadian = Math.abs(thetaRadian1) - Math.abs(thetaRadian2);
-
-         double result = Math.acos(Math.sin(phiRadian1)*Math.sin(phiRadian2)+Math.cos(phiRadian1)*Math.cos(phiRadian2)*Math.cos(deltaThetaRadian));
-         return Math.toDegrees(result);
-         */
-
-
-    }
 
 
     /**

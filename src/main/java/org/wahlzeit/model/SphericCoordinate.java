@@ -161,4 +161,38 @@ public class SphericCoordinate extends AbstractCoordinate {
         result = (int) (31 * result + rint(getRadius(), NACHKOMMASTELLEN));
         return result;
     }
+
+    /**
+     * @param coordinate
+     * @return centralAngel between this and coordinate by using Radians
+     */
+    protected double doGetCentralAngel(SphericCoordinate coordinate) {
+        SphericCoordinate c1 = this.asSphericCoordinate();
+        SphericCoordinate c2 = coordinate.asSphericCoordinate();
+
+
+        double phiRadian1 = Math.toRadians(c1.getPhi());
+        double thetaRadian1 = Math.toRadians(c1.getTheta());
+
+        double phiRadian2 = Math.toRadians(c2.getPhi());
+        double thetaRadian2 = Math.toRadians(c2.getTheta());
+
+        double deltaThetaRadian = Math.abs(Math.abs(thetaRadian1) - Math.abs(thetaRadian2));
+
+        double zähler = Math.sqrt(
+                Math.pow((Math.cos(phiRadian2) * Math.sin(deltaThetaRadian)), 2) +
+                        Math.pow(((Math.cos(phiRadian1) * Math.sin(phiRadian2)) - (Math.sin(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian))), 2));
+        double nenner = ((Math.sin(phiRadian1) * Math.sin(phiRadian2)) + (Math.cos(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian)));
+
+        double centralAngle;
+        if (nenner != 0) {
+            centralAngle = Math.atan(zähler / nenner);
+        } else {
+            throw new IllegalArgumentException("One of the coordinatevalues is 0; Division by 0 is forbidden");
+        }
+        return Math.toDegrees(centralAngle);
+
+    }
 }
+
+
