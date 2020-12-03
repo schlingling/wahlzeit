@@ -86,7 +86,6 @@ public class AbstractCoordinateTest {
 
     }
 
-
     @Test(expected = IllegalArgumentException.class)
     public void testAssertArgumentNotNull(){
         //ARRANGE
@@ -96,11 +95,5 @@ public class AbstractCoordinateTest {
        AbstractCoordinate.assertArgumentNotNull(s);
 
     }
-
-
-
-
-
-
 
 }
