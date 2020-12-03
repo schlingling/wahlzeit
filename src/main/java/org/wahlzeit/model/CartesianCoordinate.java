@@ -103,15 +103,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public int hashCode() {
+    protected int doHashCode() {
         int result = 17;
         result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getY(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getZ(), NACHKOMMASTELLEN));
         return result;
-
     }
-
 
     /**
      * calculates CartesianCoordinatte from coordinates with 7 digits tolerance
@@ -164,6 +162,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
                 compare(this.getY(), c.getY(), DELTA) &&
                 compare(this.getZ(), c.getZ(), DELTA));
     }
+
 
 
     /**

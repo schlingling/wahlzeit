@@ -259,6 +259,20 @@ public class CartesianCoordinateTest {
     }
 
     @Test
+    public void testEqualsComplex(){
+        //ARRANGE
+        CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
+        CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
+
+
+        //ACT
+        //ASSERT
+        assertTrue(cc.equals(cc2));
+        assertTrue(cc2.equals(cc));
+
+    }
+
+    @Test
     public void testNotDoIsEqualComplex(){
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,6,5);
@@ -269,6 +283,19 @@ public class CartesianCoordinateTest {
     }
 
 
+    @Test
+    public void testHashCode(){
+        //ARRANGE
+        CartesianCoordinate cc1 = new CartesianCoordinate(5,5,5);
+        CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
+
+        int h1 = cc1.hashCode();
+        int h2 = cc2.hashCode();
+
+        //ACT
+        //ASSERT
+        assertTrue(h1==h2);
+    }
 
 
     @Test(expected = IllegalArgumentException.class)

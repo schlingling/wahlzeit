@@ -109,6 +109,11 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     }
 
 
+    @Override
+    public int hashCode() {
+        return doHashCode();
+    }
+
     /**
      * @param coordinate
      * @return centralAngel between this and coordinate by using Radians
@@ -125,19 +130,40 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         double phiRadian2 = Math.toRadians(c2.getPhi());
         double thetaRadian2 = Math.toRadians(c2.getTheta());
 
-        double deltaPhiRadian = phiRadian1 - phiRadian2;
+        double deltaThetaRadian = Math.abs(Math.abs(thetaRadian1) - Math.abs(thetaRadian2));
 
-        double zähler = Math.sqrt(Math.pow((Math.cos(thetaRadian2) * Math.sin(deltaPhiRadian)), 2) +
-                Math.pow((Math.cos(thetaRadian1) * Math.sin(thetaRadian2) - Math.sin(thetaRadian1) * Math.cos(thetaRadian2) * Math.cos(deltaPhiRadian)), 2));
-        double nenner = (Math.sin(thetaRadian1) * Math.sin(thetaRadian2) + Math.cos(thetaRadian1) * Math.cos(thetaRadian2) * Math.cos(deltaPhiRadian));
+        double zähler = Math.sqrt(
+                Math.pow((Math.cos(phiRadian2) * Math.sin(deltaThetaRadian)), 2) +
+                        Math.pow(((Math.cos(phiRadian1) * Math.sin(phiRadian2)) - (Math.sin(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian))), 2));
+        double nenner = ((Math.sin(phiRadian1) * Math.sin(phiRadian2)) + (Math.cos(phiRadian1) * Math.cos(phiRadian2) * Math.cos(deltaThetaRadian)));
 
         double centralAngle;
-        if (nenner !=0) {
+        if (nenner != 0) {
             centralAngle = Math.atan(zähler / nenner);
         } else {
             throw new IllegalArgumentException("One of the coordinatevalues is 0; Division by 0 is forbidden");
         }
-        return centralAngle;
+        return Math.toDegrees(centralAngle);
+
+        /**
+
+         Alternative Impl for testing issues
+         SphericCoordinate c1 = this.asSphericCoordinate();
+         SphericCoordinate c2 = coordinate.asSphericCoordinate();
+
+
+         double phiRadian1 = Math.toRadians(c1.getPhi());
+         double thetaRadian1 = Math.toRadians(c1.getTheta());
+
+         double phiRadian2 = Math.toRadians(c2.getPhi());
+         double thetaRadian2 = Math.toRadians(c2.getTheta());
+
+         double deltaThetaRadian = Math.abs(thetaRadian1) - Math.abs(thetaRadian2);
+
+         double result = Math.acos(Math.sin(phiRadian1)*Math.sin(phiRadian2)+Math.cos(phiRadian1)*Math.cos(phiRadian2)*Math.cos(deltaThetaRadian));
+         return Math.toDegrees(result);
+         */
+
 
     }
 
@@ -175,7 +201,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     }
 
 
-
+    protected abstract int doHashCode();
     protected abstract boolean doIsEqual(Coordinate coordinate);
 
 }

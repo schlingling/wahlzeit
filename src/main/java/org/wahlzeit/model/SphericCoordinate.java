@@ -146,19 +146,19 @@ public class SphericCoordinate extends AbstractCoordinate {
         resultSet.updateDouble("location_radius", this.getRadius());
     }
 
+
+
     /**
      * calculates hashCode from coordinates with 7 digits tolerance
      *
      * @methodtype query
      */
     @Override
-    public int hashCode() {
+    protected int doHashCode() {
         int result = 17;
         result = (int) (31 * result + rint(getPhi(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getTheta(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getRadius(), NACHKOMMASTELLEN));
         return result;
-
     }
-
 }

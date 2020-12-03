@@ -108,6 +108,19 @@ public class SphericCoordinateTest {
     }
 
     @Test
+    public void testEqualsComplex(){
+        //ARRANGE
+        SphericCoordinate sc = new SphericCoordinate(5,5,5);
+
+
+        //ACT
+        //ASSERT
+        assertTrue(sc.equals(c2));
+        assertTrue(c2.equals(sc));
+
+    }
+
+    @Test
     public void testNotDoIsEqualComplex(){
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,6,5);
@@ -132,25 +145,4 @@ public class SphericCoordinateTest {
     }
 
 
-
-/**
-    public void testAsCartesianCoordinate(){
-        //ARRANGE
-        //ACT
-        //ASSERT
-    }
-
-
-    public void testAsCartesianCoordinate(){
-        //ARRANGE
-        //ACT
-        //ASSERT
-    }
-
-    public void testAsCartesianCoordinate(){
-        //ARRANGE
-        //ACT
-        //ASSERT
-    }
-*/
 }
