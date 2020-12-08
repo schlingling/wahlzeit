@@ -278,6 +278,8 @@ public class UserManager extends ObjectManager {
 			updateObject(user, stmt);
 		} catch (SQLException sex) {
 			SysLog.logThrowable(sex);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

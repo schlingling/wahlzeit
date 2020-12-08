@@ -171,7 +171,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testEqualMethods(){
+    public void testEqualMethods()throws Exception{
 
         //ARRANGE
         double a = 1.1;
@@ -203,7 +203,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsCartesianCoordinate(){
+    public void testAsCartesianCoordinate() throws Exception{
 
         CartesianCoordinate cc = c2.asCartesianCoordinate();
 
@@ -219,7 +219,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsSphericCoordinate(){
+    public void testAsSphericCoordinate()throws Exception{
         //ARRANGE
         //ACT
         SphericCoordinate sc = c2.asSphericCoordinate();
@@ -238,7 +238,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualSimple(){
+    public void testDoIsEqualSimple()throws Exception{
         //ARRANGE
         CartesianCoordinate cc1 = new CartesianCoordinate();
         CartesianCoordinate cc2 = new CartesianCoordinate();
@@ -250,7 +250,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualComplex(){
+    public void testDoIsEqualComplex()throws Exception{
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
 
@@ -275,7 +275,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testNotDoIsEqualComplex(){
+    public void testNotDoIsEqualComplex()throws Exception{
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,6,5);
 

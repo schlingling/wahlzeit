@@ -195,6 +195,8 @@ public class PhotoManager extends ObjectManager {
 			updateObject(photo, stmt);
 		} catch (SQLException sex) {
 			SysLog.logThrowable(sex);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

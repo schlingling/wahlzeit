@@ -17,7 +17,7 @@ public class SphericCoordinateTest {
 
 
     @Before
-    public void setupCoordinates() {
+    public void setupCoordinates() throws Exception {
 
         this.c1 = new SphericCoordinate();
         this.c2 = new SphericCoordinate(5,5,5);
@@ -37,7 +37,7 @@ public class SphericCoordinateTest {
 
 
     @Test
-    public void testConstructor(){
+    public void testConstructor() throws Exception {
         //ARRANGE
         //ACT
         double diff_phi = Math.abs(c2.getPhi()-5);
@@ -52,7 +52,7 @@ public class SphericCoordinateTest {
 
 
     @Test
-    public void testAsCartesianCoordinate(){
+    public void testAsCartesianCoordinate() throws Exception{
         //ARRANGE
         //ACT
         CartesianCoordinate cc = c2.asCartesianCoordinate();
@@ -69,7 +69,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testAsSphericCoordinate(){
+    public void testAsSphericCoordinate() throws Exception {
         SphericCoordinate sc = c2.asSphericCoordinate();
 
 
@@ -86,7 +86,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualSimple(){
+    public void testDoIsEqualSimple()throws Exception{
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate();
 
@@ -97,7 +97,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualComplex(){
+    public void testDoIsEqualComplex()throws Exception{
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,5,5);
 
@@ -109,7 +109,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testEqualsComplex(){
+    public void testEqualsComplex() throws Exception {
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,5,5);
 
@@ -122,7 +122,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testNotDoIsEqualComplex(){
+    public void testNotDoIsEqualComplex()throws Exception{
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,6,5);
 
@@ -133,7 +133,7 @@ public class SphericCoordinateTest {
 
 
     @Test
-    public void testHashCode(){
+    public void testHashCode() throws Exception {
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,5,5);
 

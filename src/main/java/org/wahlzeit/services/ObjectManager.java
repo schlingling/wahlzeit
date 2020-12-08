@@ -119,7 +119,7 @@ public abstract class ObjectManager {
 	/**
 	 * 
 	 */
-	protected void updateObject(Persistent obj, PreparedStatement stmt) throws SQLException {
+	protected void updateObject(Persistent obj, PreparedStatement stmt) throws Exception {
 		if (obj.isDirty()) {
 			obj.writeId(stmt, 1);
 			SysLog.logQuery(stmt);
@@ -141,7 +141,11 @@ public abstract class ObjectManager {
 	protected void updateObjects(Collection coll, PreparedStatement stmt) throws SQLException {
 		for (Iterator i = coll.iterator(); i.hasNext(); ) {
 			Persistent obj = (Persistent) i.next();
-			updateObject(obj, stmt);
+			try {
+				updateObject(obj, stmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

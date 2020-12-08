@@ -116,7 +116,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public CartesianCoordinate asCartesianCoordinate() {
+    public CartesianCoordinate asCartesianCoordinate() throws Exception {
         return this;
     }
 
@@ -126,7 +126,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate()throws Exception {
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
         double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
@@ -156,7 +156,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected boolean doIsEqual(Coordinate coordinate) {
+    protected boolean doIsEqual(Coordinate coordinate) throws Exception{
         CartesianCoordinate c = coordinate.asCartesianCoordinate();
         return (compare(this.getX(), c.getX(), DELTA) &&
                 compare(this.getY(), c.getY(), DELTA) &&
@@ -191,5 +191,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
         resultSet.updateDouble("location_z", this.getZ());
     }
 
+    @Override
+    protected void assertClassInvariants() throws Exception {
+        if (Double.isNaN(this.x)|| Double.isNaN(this.y) ||Double.isNaN(this.z)){
+            throw new Exception("One Instanceattribute is NAN");
+        }
+    }
 }
 

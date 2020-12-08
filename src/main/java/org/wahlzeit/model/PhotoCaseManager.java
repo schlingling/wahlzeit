@@ -108,6 +108,8 @@ public class PhotoCaseManager extends ObjectManager {
 			// @FIXME Main.saveGlobals();
 		} catch (SQLException sex) {
 			SysLog.logThrowable(sex);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -122,6 +124,8 @@ public class PhotoCaseManager extends ObjectManager {
 			updateObject(myCase, stmt);
 		} catch (SQLException sex) {
 			SysLog.logThrowable(sex);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}	
 	

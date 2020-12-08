@@ -19,7 +19,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return distance between this and coordinate
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
+    public double getCartesianDistance(Coordinate coordinate) throws Exception {
         assertArgumentNotNull(coordinate);
         return doGetCartesianDistance(coordinate);
     }
@@ -30,7 +30,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return central angle between this and coordinate
      */
     @Override
-    public double getCentralAngel(Coordinate coordinate) {
+    public double getCentralAngel(Coordinate coordinate) throws Exception{
         assertArgumentNotNull(coordinate);
         return doGetCentralAngle(coordinate);
     }
@@ -43,7 +43,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype query
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
+    public boolean isEqual(Coordinate coordinate) throws Exception {
         assertArgumentNotNull(coordinate);
         if (!(coordinate instanceof Coordinate) || !(this instanceof Coordinate)) {
             return false;
@@ -94,34 +94,42 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
             return false;
         }
         Coordinate cord = (Coordinate) obj;
-        return this.isEqual(cord);
 
+
+        try {
+            return this.isEqual(cord);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return false;
+    }
+
+    @Override
+    public int hashCode() {
+        try {
+            return doHashCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     /**
      * @param coordinate
      * @return cartesian Distance between this and coordinate
      */
-    protected double doGetCartesianDistance(Coordinate coordinate) {
+    protected double doGetCartesianDistance(Coordinate coordinate) throws Exception {
         CartesianCoordinate c1 = this.asCartesianCoordinate();
         CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
         return c1.getDistance(c2);
     }
 
-    protected double doGetCentralAngle(Coordinate coordinate){
+    protected double doGetCentralAngle(Coordinate coordinate) throws Exception{
         SphericCoordinate sc1 = this.asSphericCoordinate();
         SphericCoordinate sc2 = coordinate.asSphericCoordinate();
         return sc1.doGetCentralAngel(sc2);
     }
-
-
-
-
-    @Override
-    public int hashCode() {
-        return doHashCode();
-    }
-
 
 
     /**
@@ -157,7 +165,10 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     }
 
 
-    protected abstract int doHashCode();
-    protected abstract boolean doIsEqual(Coordinate coordinate);
+     protected abstract int doHashCode() throws Exception;
+     protected abstract boolean doIsEqual(Coordinate coordinate) throws Exception;
+     protected abstract void assertClassInvariants() throws Exception;
+
+
 
 }
