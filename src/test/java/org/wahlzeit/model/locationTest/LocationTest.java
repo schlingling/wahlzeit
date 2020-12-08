@@ -21,11 +21,14 @@
  */
 
 
-package org.wahlzeit.model;
+package org.wahlzeit.model.locationTest;
 
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.location.AbstractCoordinate;
+import org.wahlzeit.model.location.Coordinate;
+import org.wahlzeit.model.location.Location;
 import org.wahlzeit.services.DataObject;
 
 import static org.junit.Assert.*;

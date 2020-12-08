@@ -1,11 +1,12 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.locationTest;
 
-import com.sun.source.tree.AssertTree;
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.location.AbstractCoordinate;
+import org.wahlzeit.model.location.CartesianCoordinate;
+import org.wahlzeit.model.location.SphericCoordinate;
 
 import static  org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 public class AbstractCoordinateTest {
 
@@ -75,6 +76,7 @@ public class AbstractCoordinateTest {
 
     }
 
+    /*
     @Test
     public void testCompare(){
         //ARRANGE
@@ -96,5 +98,5 @@ public class AbstractCoordinateTest {
        AbstractCoordinate.assertArgumentNotNull(s);
 
     }
-
+**/
 }

@@ -1,7 +1,9 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.locationTest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.location.CartesianCoordinate;
+import org.wahlzeit.model.location.SphericCoordinate;
 
 
 import static  org.junit.Assert.*;
@@ -243,8 +245,8 @@ public class CartesianCoordinateTest {
 
         //ACT
         //ASSERT
-        assertTrue(cc1.doIsEqual(cc2));
-        assertTrue(cc2.doIsEqual(cc1));
+        assertTrue(cc1.isEqual(cc2));
+        assertTrue(cc2.isEqual(cc1));
     }
 
     @Test
@@ -254,8 +256,8 @@ public class CartesianCoordinateTest {
 
         //ACT
         //ASSERT
-        assertTrue(cc.doIsEqual(c7));
-        assertTrue(c7.doIsEqual(cc));
+        assertTrue(cc.isEqual(c7));
+        assertTrue(c7.isEqual(cc));
     }
 
     @Test
@@ -279,7 +281,7 @@ public class CartesianCoordinateTest {
 
         //ACT
         //ASSERT
-        assertFalse(cc.doIsEqual(c2));
+        assertFalse(cc.isEqual(c2));
     }
 
 

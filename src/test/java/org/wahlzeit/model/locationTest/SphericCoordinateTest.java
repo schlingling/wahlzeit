@@ -1,8 +1,9 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.locationTest;
 
-import com.sun.source.tree.AssertTree;
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.location.CartesianCoordinate;
+import org.wahlzeit.model.location.SphericCoordinate;
 
 import static  org.junit.Assert.*;
 
@@ -91,8 +92,8 @@ public class SphericCoordinateTest {
 
         //ACT
         //ASSERT
-        assertTrue(sc.doIsEqual(c1));
-        assertTrue(c1.doIsEqual(sc));
+        assertTrue(sc.isEqual(c1));
+        assertTrue(c1.isEqual(sc));
     }
 
     @Test
@@ -102,8 +103,8 @@ public class SphericCoordinateTest {
 
         //ACT
         //ASSERT
-        assertTrue(sc.doIsEqual(c2));
-        assertTrue(c2.doIsEqual(sc));
+        assertTrue(sc.isEqual(c2));
+        assertTrue(c2.isEqual(sc));
 
     }
 
@@ -127,7 +128,7 @@ public class SphericCoordinateTest {
 
         //ACT
         //ASSERT
-        assertFalse(sc.doIsEqual(c2));
+        assertFalse(sc.isEqual(c2));
     }
 
 

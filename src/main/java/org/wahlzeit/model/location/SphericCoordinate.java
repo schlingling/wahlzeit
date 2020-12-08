@@ -1,4 +1,4 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -154,7 +154,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected int doHashCode() {
+    public int doHashCode() {
         int result = 17;
         result = (int) (31 * result + rint(getPhi(), NACHKOMMASTELLEN));
         result = (int) (31 * result + rint(getTheta(), NACHKOMMASTELLEN));
@@ -166,7 +166,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @param coordinate
      * @return centralAngel between this and coordinate by using Radians
      */
-    protected double doGetCentralAngel(SphericCoordinate coordinate) {
+    public double doGetCentralAngel(SphericCoordinate coordinate) {
         SphericCoordinate c1 = this.asSphericCoordinate();
         SphericCoordinate c2 = coordinate.asSphericCoordinate();
 
