@@ -46,47 +46,40 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      * @methodtype set
      */
-    public void setPhi(double phi) throws Exception {
-        assertClassInvariants();
+    public void setPhi(double phi)  {
 
         this.phi = phi;
 
-        assertClassInvariants();
 
     }
 
     /**
      * @methodtype set
      */
-    public void setTheta(double theta) throws Exception {
-        assertClassInvariants();
+    public void setTheta(double theta) {
 
 
         this.theta = theta;
 
-        assertClassInvariants();
 
     }
 
     /**
      * @methodtype set
      */
-    public void setRadius(double radius) throws Exception {
-        assertClassInvariants();
+    public void setRadius(double radius)  {
 
 
 
         this.radius = radius;
 
-        assertClassInvariants();
 
     }
 
     /**
      * @methodtype get
      */
-    public double getPhi() throws Exception {
-        assertClassInvariants();
+    public double getPhi() {
         return this.phi;
 
     }
@@ -94,8 +87,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      * @methodtype get
      */
-    public double getRadius() throws Exception {
-        assertClassInvariants();
+    public double getRadius() {
 
         return this.radius;
     }
@@ -103,8 +95,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      * @methodtype get
      */
-    public double getTheta() throws Exception {
-        assertClassInvariants();
+    public double getTheta() {
         return this.theta;
     }
 
@@ -161,32 +152,28 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype mutation
      */
     @Override
-    public void readFrom(ResultSet resultSet) throws Exception {
-        assertClassInvariants();
+    public void readFrom(ResultSet resultSet) throws SQLException {
 
         this.setPhi(resultSet.getDouble("location_phi"));
         this.setTheta(resultSet.getDouble("location_theta"));
         this.setRadius(resultSet.getDouble("location_radius"));
 
-        assertClassInvariants();
 
     }
 
-    /**
+    /**y
      * Reads coordinates from database
      *
      * @methodtype mutation
      */
     @Override
-    public void writeOn(ResultSet resultSet) throws Exception {
-        assertClassInvariants();
+    public void writeOn(ResultSet resultSet) throws SQLException {
 
 
         resultSet.updateDouble("location_phi", this.getPhi());
         resultSet.updateDouble("location_theta", this.getTheta());
         resultSet.updateDouble("location_radius", this.getRadius());
 
-        assertClassInvariants();
 
     }
 
