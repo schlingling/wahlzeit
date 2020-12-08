@@ -19,9 +19,14 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
     public SphericCoordinate() throws Exception {
+        assertClassInvariants();
+
         this.setPhi(0);
         this.setRadius(0);
         this.setTheta(0);
+
+        assertClassInvariants();
+
     }
 
     /**
@@ -46,34 +51,22 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      * @methodtype set
      */
-    public void setPhi(double phi)  {
-
+    public void setPhi(double phi) {
         this.phi = phi;
-
-
     }
 
     /**
      * @methodtype set
      */
     public void setTheta(double theta) {
-
-
         this.theta = theta;
-
-
     }
 
     /**
      * @methodtype set
      */
-    public void setRadius(double radius)  {
-
-
-
+    public void setRadius(double radius) {
         this.radius = radius;
-
-
     }
 
     /**
@@ -81,14 +74,12 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     public double getPhi() {
         return this.phi;
-
     }
 
     /**
      * @methodtype get
      */
     public double getRadius() {
-
         return this.radius;
     }
 
@@ -107,9 +98,8 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public CartesianCoordinate asCartesianCoordinate()throws Exception {
+    public CartesianCoordinate asCartesianCoordinate() throws Exception {
         assertClassInvariants();
-
 
         double x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
         double y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
@@ -127,7 +117,6 @@ public class SphericCoordinate extends AbstractCoordinate {
     @Override
     public SphericCoordinate asSphericCoordinate() throws Exception {
         assertClassInvariants();
-
         return this;
     }
 
@@ -137,11 +126,10 @@ public class SphericCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    protected boolean doIsEqual(Coordinate coordinate) throws Exception{
+    protected boolean doIsEqual(Coordinate coordinate) throws Exception {
         assertClassInvariants();
-
         SphericCoordinate c = coordinate.asSphericCoordinate();
-                return (compare(this.getPhi(), c.getPhi(), DELTA) &&
+        return (compare(this.getPhi(), c.getPhi(), DELTA) &&
                 compare(this.getTheta(), c.getTheta(), DELTA) &&
                 compare(this.getRadius(), c.getRadius(), DELTA));
     }
@@ -153,30 +141,23 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public void readFrom(ResultSet resultSet) throws SQLException {
-
         this.setPhi(resultSet.getDouble("location_phi"));
         this.setTheta(resultSet.getDouble("location_theta"));
         this.setRadius(resultSet.getDouble("location_radius"));
-
-
     }
 
-    /**y
+    /**
+     * y
      * Reads coordinates from database
      *
      * @methodtype mutation
      */
     @Override
     public void writeOn(ResultSet resultSet) throws SQLException {
-
-
         resultSet.updateDouble("location_phi", this.getPhi());
         resultSet.updateDouble("location_theta", this.getTheta());
         resultSet.updateDouble("location_radius", this.getRadius());
-
-
     }
-
 
 
     /**
@@ -187,7 +168,6 @@ public class SphericCoordinate extends AbstractCoordinate {
     @Override
     protected int doHashCode() throws Exception {
         assertClassInvariants();
-
 
         int result = 17;
         result = (int) (31 * result + rint(getPhi(), NACHKOMMASTELLEN));
@@ -234,7 +214,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     @Override
     protected void assertClassInvariants() throws Exception {
-        if (Double.isNaN(this.phi)|| Double.isNaN(this.theta) ||Double.isNaN(this.radius)){
+        if (Double.isNaN(this.phi) || Double.isNaN(this.theta) || Double.isNaN(this.radius)) {
             throw new Exception("One Instanceattribute is NAN");
         }
     }

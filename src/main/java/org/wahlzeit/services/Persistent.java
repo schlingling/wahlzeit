@@ -51,12 +51,12 @@ public interface Persistent {
 	/**
 	 * 
 	 */
-	public void readFrom(ResultSet rset) throws Exception;
+	public void readFrom(ResultSet rset) throws SQLException;
 	
 	/**
-	 * 
+	 *
 	 */
-	public void writeOn(ResultSet rset) throws Exception;
+	public void writeOn(ResultSet rset) throws SQLException;
 	
 	/**
 	 * 

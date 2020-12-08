@@ -2,7 +2,6 @@ package org.wahlzeit.model.locationTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wahlzeit.model.location.AbstractCoordinate;
 import org.wahlzeit.model.location.CartesianCoordinate;
 import org.wahlzeit.model.location.SphericCoordinate;
 
@@ -62,7 +61,7 @@ public class AbstractCoordinateTest {
     }
 
     @Test
-    public void testGetCartesianDistanceComplex(){
+    public void testGetCartesianDistanceComplex() throws Exception {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate(5,5,5);
         CartesianCoordinate c2 = new CartesianCoordinate(7,7,7);

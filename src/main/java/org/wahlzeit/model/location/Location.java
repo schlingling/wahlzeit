@@ -16,7 +16,11 @@ public class Location extends DataObject {
      * @methodtype constructor
      */
     public Location() {
-        this.coordinate = new CartesianCoordinate();
+        try {
+            this.coordinate = new CartesianCoordinate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         incWriteCount();
     }
 
@@ -28,7 +32,11 @@ public class Location extends DataObject {
      * @methodtype constructor
      */
     public Location(double x, double y, double z) {
-        this.coordinate = new CartesianCoordinate(x,y,z);
+        try {
+            this.coordinate = new CartesianCoordinate(x,y,z);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         incWriteCount();
     }
 

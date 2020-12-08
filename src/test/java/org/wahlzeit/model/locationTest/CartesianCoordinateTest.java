@@ -21,7 +21,7 @@ public class CartesianCoordinateTest {
 
 
     @Before
-    public void setupCoordinates() {
+    public void setupCoordinates() throws Exception {
 
         this.c1 = new CartesianCoordinate(1.2334, 2.3451651, 3.4565196814981);
         this.c2 = new CartesianCoordinate(3.4565196814981, 2.3451651, 1.2334);
@@ -129,7 +129,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testGetDistanceSimple(){
+    public void testGetDistanceSimple() throws Exception {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate(1,1,1);
         CartesianCoordinate c2 = new CartesianCoordinate(1,1,1);
@@ -145,7 +145,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testGetDistanceComplex(){
+    public void testGetDistanceComplex() throws Exception {
         //ARRANGE
         double cc1,cc2,cc3,cc4,cc5,cc6;
 
@@ -261,7 +261,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testEqualsComplex(){
+    public void testEqualsComplex() throws Exception {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
         CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
@@ -286,7 +286,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testHashCode(){
+    public void testHashCode() throws Exception {
         //ARRANGE
         CartesianCoordinate cc1 = new CartesianCoordinate(5,5,5);
         CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
@@ -301,7 +301,7 @@ public class CartesianCoordinateTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void testWrongArgumentExceptions(){
+    public void testWrongArgumentExceptions() throws Exception {
         c1.getDistance(cNull);
     }
 
