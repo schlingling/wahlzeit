@@ -16,9 +16,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate() throws Exception {
+    public CartesianCoordinate()   {
         assertClassInvariants();
-
         setX(0);
         setY(0);
         setZ(0);
@@ -32,9 +31,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate(double x, double y, double z) throws Exception {
+    public CartesianCoordinate(double x, double y, double z)   {
         assertClassInvariants();
-
+        assertArgumentNotNAN(x);
+        assertArgumentNotNAN(y);
+        assertArgumentNotNAN(z);
 
         setX(x);
         setY(y);
@@ -48,6 +49,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype get
      */
     public double getX() {
+        assertClassInvariants();
         return x;
     }
 
@@ -55,6 +57,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype get
      */
     public double getY() {
+        assertClassInvariants();
         return y;
     }
 
@@ -62,28 +65,39 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype get
      */
     public double getZ() {
+        assertClassInvariants();
         return z;
+
     }
 
     /**
      * @methodtype set
      */
     public void setX(double x) {
+        assertClassInvariants();
         this.x = x;
+        assertClassInvariants();
+
     }
 
     /**
      * @methodtype set
      */
     public void setY(double y) {
+        assertClassInvariants();
         this.y = y;
+        assertClassInvariants();
+
     }
 
     /**
      * @methodtype set
      */
     public void setZ(double z) {
+        assertClassInvariants();
         this.z = z;
+        assertClassInvariants();
+
     }
 
     /**
@@ -91,7 +105,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public double getDistance(CartesianCoordinate coordinate) throws Exception {
+    public double getDistance(CartesianCoordinate coordinate)   {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
@@ -102,6 +116,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
         c = this.getZ() - coordinate.getZ();
 
         double distance = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2));
+        assertValGreaterEqualsZero(distance);
+        assertClassInvariants();
         return distance;
     }
 
@@ -112,7 +128,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected int doHashCode() throws Exception {
+    protected int doHashCode()   {
         assertClassInvariants();
         int result = 17;
         result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
@@ -128,7 +144,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public CartesianCoordinate asCartesianCoordinate() throws Exception {
+    public CartesianCoordinate asCartesianCoordinate()   {
         assertClassInvariants();
         return this;
     }
@@ -139,7 +155,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public SphericCoordinate asSphericCoordinate()throws Exception {
+    public SphericCoordinate asSphericCoordinate()  {
         assertClassInvariants();
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
@@ -155,11 +171,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
                     (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
                             / this.getZ());
         } else {
-            theta = 0;
+            throw new ArithmeticException("Division by 0");
         }
 
         radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
-
+        assertValGreaterEqualsZero(radius);
         assertClassInvariants();
         return new SphericCoordinate(phi, theta, radius);
     }
@@ -171,9 +187,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected boolean doIsEqual(Coordinate coordinate) throws Exception{
+    protected boolean doIsEqual(Coordinate coordinate)   {
         assertClassInvariants();
-
+        assertArgumentNotNull(coordinate);
 
         CartesianCoordinate c = coordinate.asCartesianCoordinate();
 
@@ -191,10 +207,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     @Override
     public void readFrom(ResultSet resultSet) throws SQLException {
+        assertClassInvariants();
         assertArgumentNotNull(resultSet);
         this.setX(resultSet.getDouble("location_x"));
         this.setY(resultSet.getDouble("location_y"));
         this.setZ(resultSet.getDouble("location_z"));
+        assertClassInvariants();
+
     }
 
     /**
@@ -204,17 +223,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     @Override
     public void writeOn(ResultSet resultSet) throws SQLException {
+        assertClassInvariants();
         assertArgumentNotNull(resultSet);
         resultSet.updateDouble("location_x", this.getX());
         resultSet.updateDouble("location_y", this.getY());
         resultSet.updateDouble("location_z", this.getZ());
+        assertClassInvariants();
+
     }
 
     @Override
-    protected void assertClassInvariants() throws Exception {
+    protected void assertClassInvariants()   {
         if (Double.isNaN(this.x)|| Double.isNaN(this.y) ||Double.isNaN(this.z)){
-            throw new Exception("One Instanceattribute is NAN");
+            throw new UncheckedCoordinateException("Classinvariant hurt");
         }
+
+        super.assertClassInvariants();
     }
 }
 

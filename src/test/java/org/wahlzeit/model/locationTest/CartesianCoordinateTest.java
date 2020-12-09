@@ -129,7 +129,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testGetDistanceSimple() throws Exception {
+    public void testGetDistanceSimple()   {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate(1,1,1);
         CartesianCoordinate c2 = new CartesianCoordinate(1,1,1);
@@ -145,7 +145,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testGetDistanceComplex() throws Exception {
+    public void testGetDistanceComplex()   {
         //ARRANGE
         double cc1,cc2,cc3,cc4,cc5,cc6;
 
@@ -171,7 +171,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testEqualMethods()throws Exception{
+    public void testEqualMethods() {
 
         //ARRANGE
         double a = 1.1;
@@ -203,7 +203,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsCartesianCoordinate() throws Exception{
+    public void testAsCartesianCoordinate()  {
 
         CartesianCoordinate cc = c2.asCartesianCoordinate();
 
@@ -219,7 +219,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsSphericCoordinate()throws Exception{
+    public void testAsSphericCoordinate() {
         //ARRANGE
         //ACT
         SphericCoordinate sc = c2.asSphericCoordinate();
@@ -237,8 +237,8 @@ public class CartesianCoordinateTest {
 
     }
 
-    @Test
-    public void testDoIsEqualSimple()throws Exception{
+    @Test (expected = ArithmeticException.class)
+    public void testDoIsEqualSimple() {
         //ARRANGE
         CartesianCoordinate cc1 = new CartesianCoordinate();
         CartesianCoordinate cc2 = new CartesianCoordinate();
@@ -250,7 +250,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualComplex()throws Exception{
+    public void testDoIsEqualComplex() {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
 
@@ -261,7 +261,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testEqualsComplex() throws Exception {
+    public void testEqualsComplex()   {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
         CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
@@ -275,7 +275,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testNotDoIsEqualComplex()throws Exception{
+    public void testNotDoIsEqualComplex() {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,6,5);
 
@@ -286,7 +286,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testHashCode() throws Exception {
+    public void testHashCode()   {
         //ARRANGE
         CartesianCoordinate cc1 = new CartesianCoordinate(5,5,5);
         CartesianCoordinate cc2 = new CartesianCoordinate(5,5,5);
@@ -301,7 +301,7 @@ public class CartesianCoordinateTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void testWrongArgumentExceptions() throws Exception {
+    public void testWrongArgumentExceptions()   {
         c1.getDistance(cNull);
     }
 

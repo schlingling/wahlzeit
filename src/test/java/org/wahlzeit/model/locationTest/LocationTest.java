@@ -78,7 +78,7 @@ public class LocationTest {
         //assert
 
         boolean test = loc.equals(other_loc);
-        assertTrue(test);
+
     }
 
     @Test

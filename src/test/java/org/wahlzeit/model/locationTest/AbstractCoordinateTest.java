@@ -14,7 +14,7 @@ public class AbstractCoordinateTest {
 
 
     @Before
-    public void setupAbstractCoordinate() throws Exception {
+    public void setupAbstractCoordinate()   {
 
         this.sc1 = new SphericCoordinate();
         this.sc2 = new SphericCoordinate(5,3,10);
@@ -27,7 +27,7 @@ public class AbstractCoordinateTest {
 
 
     @Test
-    public void testGetCentralAngel()throws Exception{
+    public void testGetCentralAngel() {
         //ARRANGE https://de.wikipedia.org/wiki/Orthodrome
         //Check link for example
         SphericCoordinate s1 = new SphericCoordinate(52.517, 13.4, 3.5);
@@ -43,7 +43,7 @@ public class AbstractCoordinateTest {
     }
 
     @Test
-    public void testGetCartesianDistanceSimple()throws Exception{
+    public void testGetCartesianDistanceSimple() {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate();
         CartesianCoordinate c2 = new CartesianCoordinate();
@@ -61,7 +61,7 @@ public class AbstractCoordinateTest {
     }
 
     @Test
-    public void testGetCartesianDistanceComplex() throws Exception {
+    public void testGetCartesianDistanceComplex()   {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate(5,5,5);
         CartesianCoordinate c2 = new CartesianCoordinate(7,7,7);

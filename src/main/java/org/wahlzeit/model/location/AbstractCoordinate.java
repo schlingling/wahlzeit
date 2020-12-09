@@ -14,14 +14,24 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     protected final int NACHKOMMASTELLEN = 7;
 
 
+
+    protected abstract int doHashCode()  ;
+    protected abstract boolean doIsEqual(Coordinate coordinate)  ;
+
+
     /**
      * @param coordinate
      * @return distance between this and coordinate
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) throws Exception {
+    public double getCartesianDistance(Coordinate coordinate)   {
+        assertClassInvariants();
         assertArgumentNotNull(coordinate);
-        return doGetCartesianDistance(coordinate);
+
+        double result = doGetCartesianDistance(coordinate);
+        //Post-Condition
+        assertValGreaterEqualsZero(result);
+        return result;
     }
 
 
@@ -30,8 +40,10 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return central angle between this and coordinate
      */
     @Override
-    public double getCentralAngel(Coordinate coordinate) throws Exception{
+    public double getCentralAngel(Coordinate coordinate) throws UncheckedCoordinateException {
+        assertClassInvariants();
         assertArgumentNotNull(coordinate);
+        //TODO: Post-Condition: Darf ein Winkel negativ sein?
         return doGetCentralAngle(coordinate);
     }
 
@@ -43,7 +55,8 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype query
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) throws Exception {
+    public boolean isEqual(Coordinate coordinate) throws UncheckedCoordinateException {
+        assertClassInvariants();
         assertArgumentNotNull(coordinate);
         if (!(coordinate instanceof Coordinate) || !(this instanceof Coordinate)) {
             return false;
@@ -58,12 +71,15 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         boolean check1 = cc1.doIsEqual(cc2);
         boolean check2 = sc1.doIsEqual(sc2);
 
+        assertClassInvariants();
         return check1 && check2;
     }
 
 
     @Override
     public String getIdAsString() {
+        assertClassInvariants();
+
         //NOT IMPLEMENTED
         return null;
     }
@@ -71,6 +87,8 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     @Override
     public void writeId(PreparedStatement stmt, int pos) throws SQLException {
+        assertClassInvariants();
+
         assertArgumentNotNull(stmt);
         //donothing
     }
@@ -78,6 +96,8 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     @Override
     public boolean isDirty() {
+        assertClassInvariants();
+
         return writeCount != 0;
     }
 
@@ -89,6 +109,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      */
     @Override
     public boolean equals(Object obj) {
+        assertClassInvariants();
         assertArgumentNotNull(obj);
         if (!(obj instanceof Coordinate) || !(this instanceof Coordinate)) {
             return false;
@@ -106,28 +127,33 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     @Override
     public int hashCode() {
-        try {
-            return doHashCode();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        assertClassInvariants();
+        return doHashCode();
 
-        return -1;
     }
 
     /**
      * @param coordinate
      * @return cartesian Distance between this and coordinate
      */
-    protected double doGetCartesianDistance(Coordinate coordinate) throws Exception {
+    protected double doGetCartesianDistance(Coordinate coordinate)   {
+        assertClassInvariants();
         CartesianCoordinate c1 = this.asCartesianCoordinate();
         CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
-        return c1.getDistance(c2);
+
+        double result = c1.getDistance(c2);
+        assertValGreaterEqualsZero(result);
+        assertClassInvariants();
+        return result;
     }
 
-    protected double doGetCentralAngle(Coordinate coordinate) throws Exception{
+    protected double doGetCentralAngle(Coordinate coordinate)   {
+        assertClassInvariants();
         SphericCoordinate sc1 = this.asSphericCoordinate();
         SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+
+        //TODO: Post-Condition: Darf ein Winkel negativ sein?
+        assertClassInvariants();
         return sc1.doGetCentralAngel(sc2);
     }
 
@@ -138,6 +164,10 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype helper
      */
     protected static boolean compare(double a, double b, double epsilon) {
+        assertArgumentNotNAN(a);
+        assertArgumentNotNAN(b);
+        assertArgumentNotNAN(epsilon);
+
         return Math.abs(a - b) < epsilon;
     }
 
@@ -147,8 +177,20 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype helper
      */
     protected static double rint(double value, int decimalPoints) {
+        assertArgumentNotNAN(value);
+        assertValGreaterEqualsZero(decimalPoints);
+
         double d = Math.pow(10, decimalPoints);
         return Math.rint(value * d) / d;
+    }
+
+    /**
+     * Assert classInvariants from AbstractClass --> should be called from Subclasses when they override
+     *
+     * @methodtype helper
+     */
+    protected void assertClassInvariants() throws UncheckedCoordinateException {
+
     }
 
 
@@ -164,10 +206,22 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         ;
     }
 
+    protected static void assertArgumentNotNAN(double argument) throws IllegalArgumentException {
+        if (Double.isNaN(argument) ) {
+            throw new IllegalArgumentException("Argument is nan");
+        }
+        ;
+    }
 
-     protected abstract int doHashCode() throws Exception;
-     protected abstract boolean doIsEqual(Coordinate coordinate) throws Exception;
-     protected abstract void assertClassInvariants() throws Exception;
+
+    protected static void assertValGreaterEqualsZero(double argument) throws IllegalArgumentException {
+        if (argument<0){
+            throw new IllegalArgumentException("Argument should be greater euquals Zero");
+
+        }
+    }
+
+
 
 
 
