@@ -12,6 +12,9 @@ public interface Coordinate {
 
     public boolean isEqual(Coordinate coordinate) ;
 
+
+
+
     public class UncheckedCoordinateException extends RuntimeException {
 
         public UncheckedCoordinateException() {

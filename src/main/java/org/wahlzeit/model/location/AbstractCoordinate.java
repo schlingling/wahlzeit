@@ -40,7 +40,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return central angle between this and coordinate
      */
     @Override
-    public double getCentralAngel(Coordinate coordinate) throws UncheckedCoordinateException {
+    public double getCentralAngel(Coordinate coordinate)   {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
         //TODO: Post-Condition: Darf ein Winkel negativ sein?
@@ -55,7 +55,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype query
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) throws UncheckedCoordinateException {
+    public boolean isEqual(Coordinate coordinate)   {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
         if (!(coordinate instanceof Coordinate) || !(this instanceof Coordinate)) {
@@ -189,7 +189,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      *
      * @methodtype helper
      */
-    protected void assertClassInvariants() throws UncheckedCoordinateException {
+    protected void assertClassInvariants()   {
 
     }
 
@@ -199,14 +199,14 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      *
      * @methodtype helper
      */
-    protected static void assertArgumentNotNull(Object obj) throws IllegalArgumentException {
+    protected static void assertArgumentNotNull(Object obj)   {
         if (obj == null) {
             throw new IllegalArgumentException("Argument is null");
         }
         ;
     }
 
-    protected static void assertArgumentNotNAN(double argument) throws IllegalArgumentException {
+    protected static void assertArgumentNotNAN(double argument)   {
         if (Double.isNaN(argument) ) {
             throw new IllegalArgumentException("Argument is nan");
         }
@@ -214,7 +214,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     }
 
 
-    protected static void assertValGreaterEqualsZero(double argument) throws IllegalArgumentException {
+    protected static void assertValGreaterEqualsZero(double argument)   {
         if (argument<0){
             throw new IllegalArgumentException("Argument should be greater euquals Zero");
 

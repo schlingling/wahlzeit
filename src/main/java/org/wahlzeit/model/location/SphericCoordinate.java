@@ -247,7 +247,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     @Override
-    protected void assertClassInvariants() {
+    protected void assertClassInvariants()  {
         if (Double.isNaN(this.phi) || Double.isNaN(this.theta) || Double.isNaN(this.radius)) {
             throw new UncheckedCoordinateException("Classinvariant hurt");
         }

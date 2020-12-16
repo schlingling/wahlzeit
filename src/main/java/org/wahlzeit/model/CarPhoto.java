@@ -12,8 +12,6 @@ public class CarPhoto extends Photo {
     private String carOEMName="Daimler-Benz";
     private int buildYear =2020;
 
-
-
     /**
      *
      */
