@@ -45,14 +45,11 @@ public class SphericCoordinate extends AbstractCoordinate {
         assertIsValidAngle(theta);
         assertValGreaterEqualsZero(radius);
 
-
         this.setPhi(phi);
         this.setTheta(theta);
         this.setRadius(radius);
 
         assertClassInvariants();
-
-
     }
 
     /**
@@ -128,13 +125,16 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public CartesianCoordinate asCartesianCoordinate() {
+    public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException {
         assertClassInvariants();
-
-        double x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
-        double y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
-        double z = getRadius() * Math.cos(getTheta());
-
+        double x,y,z;
+        try {
+             x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
+             y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
+             z = getRadius() * Math.cos(getTheta());
+        }catch (Exception e){
+            throw new CheckedCoordinateException("Fehler in der Umwandlung zu CartesianCoordinate", e);
+        }
         return new CartesianCoordinate(x, y, z);
     }
 
@@ -145,7 +145,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException{
         assertClassInvariants();
         return this;
     }
@@ -156,7 +156,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    protected boolean doIsEqual(Coordinate coordinate) {
+    protected boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 

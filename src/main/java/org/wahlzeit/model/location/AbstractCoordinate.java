@@ -16,7 +16,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     protected abstract int doHashCode();
 
-    protected abstract boolean doIsEqual(Coordinate coordinate);
+    protected abstract boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException;
 
 
     /**
@@ -27,11 +27,20 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     public double getCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
+        double result;
+        try {
+            CartesianCoordinate c1 = this.asCartesianCoordinate();
+            CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
+            result = c1.getDistance(c2);
+        } catch (Exception e) {
+            throw new CheckedCoordinateException("Fehler in der Berechnugn der Distanz", e);
+        }
 
-        double result = doGetCartesianDistance(coordinate);
         //Post-Condition
         assertIsValidDistance(result);
+        assertClassInvariants();
         return result;
+
     }
 
 
@@ -43,10 +52,15 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     public double getCentralAngel(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
-        SphericCoordinate sc1 = this.asSphericCoordinate();
-        SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+        double res;
+        try {
+            SphericCoordinate sc1 = this.asSphericCoordinate();
+            SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+            res = sc1.doGetCentralAngel(sc2);
+        } catch (Exception e) {
+            throw new CheckedCoordinateException("Fehler in der Berechnung des CentralAngle", e);
+        }
 
-        double res = sc1.doGetCentralAngel(sc2);
         assertIsValidCentralAngle(res);
         assertClassInvariants();
         return res;
@@ -60,21 +74,29 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype query
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
+    public boolean isEqual(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
         if (!(coordinate instanceof Coordinate) || !(this instanceof Coordinate)) {
             return false;
         }
 
-        CartesianCoordinate cc1 = this.asCartesianCoordinate();
-        CartesianCoordinate cc2 = coordinate.asCartesianCoordinate();
+        boolean check1;
+        boolean check2;
+        try {
+            CartesianCoordinate cc1 = this.asCartesianCoordinate();
+            CartesianCoordinate cc2 = coordinate.asCartesianCoordinate();
 
-        SphericCoordinate sc1 = this.asSphericCoordinate();
-        SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+            SphericCoordinate sc1 = this.asSphericCoordinate();
+            SphericCoordinate sc2 = coordinate.asSphericCoordinate();
 
-        boolean check1 = cc1.doIsEqual(cc2);
-        boolean check2 = sc1.doIsEqual(sc2);
+            check1 = cc1.doIsEqual(cc2);
+            check2 = sc1.doIsEqual(sc2);
+
+
+        } catch (Exception e) {
+            throw new CheckedCoordinateException("Fehler beim Vergleich der Koordinate", e);
+        }
 
         assertClassInvariants();
         return check1 && check2;
@@ -121,13 +143,14 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         }
         Coordinate cord = (Coordinate) obj;
 
-
+        boolean res = false;
         try {
-            return this.isEqual(cord);
+            res = this.isEqual(cord);
+
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return false;
+        return res;
+
     }
 
     @Override
@@ -137,21 +160,6 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     }
 
-    /**
-     * @param coordinate
-     * @return cartesian Distance between this and coordinate
-     */
-    protected double doGetCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException {
-        assertClassInvariants();
-        assertArgumentNotNull(coordinate);
-        CartesianCoordinate c1 = this.asCartesianCoordinate();
-        CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
-
-        double result = c1.getDistance(c2);
-        assertIsValidDistance(result);
-        assertClassInvariants();
-        return result;
-    }
 
     /**
      * Compares two doubles with buffer-tolerance defined by epsilon
@@ -216,7 +224,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
 
     protected static void assertIsValidDistance(double angle) throws CheckedCoordinateException {
         if (angle < 0.0 || angle > 360.0) {
-            throw new CheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
+            throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
         }
     }
 

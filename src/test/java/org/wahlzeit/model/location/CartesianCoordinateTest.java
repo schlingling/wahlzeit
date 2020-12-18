@@ -169,7 +169,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testEqualMethods() {
+    public void testEqualMethods() throws Coordinate.CheckedCoordinateException {
 
         //ARRANGE
         double a = 1.1;
@@ -201,7 +201,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsCartesianCoordinate()  {
+    public void testAsCartesianCoordinate() throws Coordinate.CheckedCoordinateException {
 
         CartesianCoordinate cc = c2.asCartesianCoordinate();
 
@@ -217,7 +217,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testAsSphericCoordinate() {
+    public void testAsSphericCoordinate() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         //ACT
         SphericCoordinate sc = c2.asSphericCoordinate();
@@ -235,8 +235,8 @@ public class CartesianCoordinateTest {
 
     }
 
-    @Test (expected = ArithmeticException.class)
-    public void testDoIsEqualSimple() {
+    @Test (expected = Coordinate.CheckedCoordinateException.class)
+    public void testDoIsEqualSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         CartesianCoordinate cc1 = new CartesianCoordinate();
         CartesianCoordinate cc2 = new CartesianCoordinate();
@@ -248,7 +248,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualComplex() {
+    public void testDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,5,5);
 
@@ -273,7 +273,7 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testNotDoIsEqualComplex() {
+    public void testNotDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         CartesianCoordinate cc = new CartesianCoordinate(5,6,5);
 

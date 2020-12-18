@@ -50,7 +50,7 @@ public class SphericCoordinateTest {
 
 
     @Test
-    public void testAsCartesianCoordinate()  {
+    public void testAsCartesianCoordinate() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         //ACT
         CartesianCoordinate cc = c2.asCartesianCoordinate();
@@ -67,7 +67,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testAsSphericCoordinate()   {
+    public void testAsSphericCoordinate() throws Coordinate.CheckedCoordinateException {
         SphericCoordinate sc = c2.asSphericCoordinate();
 
 
@@ -84,7 +84,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualSimple() {
+    public void testDoIsEqualSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate();
 
@@ -95,7 +95,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testDoIsEqualComplex() {
+    public void testDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,5,5);
 
@@ -120,7 +120,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testNotDoIsEqualComplex() {
+    public void testNotDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         SphericCoordinate sc = new SphericCoordinate(5,6,5);
 

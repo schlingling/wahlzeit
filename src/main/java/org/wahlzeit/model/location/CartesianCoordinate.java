@@ -144,7 +144,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public CartesianCoordinate asCartesianCoordinate()   {
+    public CartesianCoordinate asCartesianCoordinate()  throws CheckedCoordinateException {
         assertClassInvariants();
         return this;
     }
@@ -155,7 +155,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public SphericCoordinate asSphericCoordinate()  {
+    public SphericCoordinate asSphericCoordinate()  throws CheckedCoordinateException {
         assertClassInvariants();
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
@@ -164,7 +164,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         double x, y, z;
 
-
+    try{
         phi = Math.atan2(this.getY(), this.getX());
         if (this.getZ() != 0) {
             theta = Math.atan(
@@ -175,6 +175,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
         }
 
         radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
+    }catch(Exception e){
+        throw new CheckedCoordinateException("Fehler in der Umwandlung zur SphericCoordinate", e);
+    }
+
         assertValGreaterEqualsZero(radius);
         assertClassInvariants();
         return new SphericCoordinate(phi, theta, radius);
@@ -187,7 +191,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected boolean doIsEqual(Coordinate coordinate)   {
+    protected boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
