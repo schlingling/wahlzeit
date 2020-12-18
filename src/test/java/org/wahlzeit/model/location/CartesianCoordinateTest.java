@@ -304,6 +304,10 @@ public class CartesianCoordinateTest {
     }
 
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testValueIsNan(){
+        CartesianCoordinate cc = new CartesianCoordinate(1,1,Double.NaN);
+    }
 
 
 

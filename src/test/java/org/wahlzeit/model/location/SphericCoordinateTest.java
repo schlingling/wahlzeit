@@ -143,5 +143,15 @@ public class SphericCoordinateTest {
         assertTrue(h1==h2);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testValueIsNan(){
+        SphericCoordinate sc = new SphericCoordinate(1,1,Double.NaN);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testClassInvariants(){
+        SphericCoordinate sc = new SphericCoordinate(1,1,-1);
+    }
+
 
 }

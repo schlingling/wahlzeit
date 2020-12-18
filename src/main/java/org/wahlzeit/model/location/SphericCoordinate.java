@@ -18,7 +18,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *
      * @methodtype constructor
      */
-    public SphericCoordinate()  {
+    public SphericCoordinate() {
         assertClassInvariants();
 
         this.setPhi(0);
@@ -35,11 +35,16 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
 
-    public SphericCoordinate(double phi, double theta, double radius)   {
+    public SphericCoordinate(double phi, double theta, double radius) {
         assertClassInvariants();
         assertArgumentNotNAN(phi);
         assertArgumentNotNAN(theta);
         assertArgumentNotNAN(radius);
+
+        assertIsValidAngle(phi);
+        assertIsValidAngle(theta);
+        assertValGreaterEqualsZero(radius);
+
 
         this.setPhi(phi);
         this.setTheta(theta);
@@ -56,6 +61,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     public void setPhi(double phi) {
         assertClassInvariants();
         assertArgumentNotNAN(phi);
+        assertIsValidAngle(phi);
 
         this.phi = phi;
         assertClassInvariants();
@@ -69,6 +75,8 @@ public class SphericCoordinate extends AbstractCoordinate {
         assertClassInvariants();
 
         assertArgumentNotNAN(phi);
+        assertIsValidAngle(theta);
+
 
         this.theta = theta;
         assertClassInvariants();
@@ -81,6 +89,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     public void setRadius(double radius) {
         assertClassInvariants();
         assertArgumentNotNAN(phi);
+        assertValGreaterEqualsZero(radius);
 
         this.radius = radius;
         assertClassInvariants();
@@ -136,7 +145,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public SphericCoordinate asSphericCoordinate()   {
+    public SphericCoordinate asSphericCoordinate() {
         assertClassInvariants();
         return this;
     }
@@ -147,7 +156,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    protected boolean doIsEqual(Coordinate coordinate)   {
+    protected boolean doIsEqual(Coordinate coordinate) {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
@@ -214,7 +223,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @param coordinate
      * @return centralAngel between this and coordinate by using Radians
      */
-    public double doGetCentralAngel(SphericCoordinate coordinate)   {
+    public double doGetCentralAngel(SphericCoordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
@@ -242,18 +251,35 @@ public class SphericCoordinate extends AbstractCoordinate {
         } else {
             throw new IllegalArgumentException("One of the coordinatevalues is 0; Division by 0 is forbidden");
         }
-        return Math.toDegrees(centralAngle);
+
+        double res = Math.toDegrees(centralAngle);
+        assertIsValidCalculatedAngle(res);
+        assertClassInvariants();
+        return res;
 
     }
 
     @Override
-    protected void assertClassInvariants()  {
+    protected void assertClassInvariants() {
         if (Double.isNaN(this.phi) || Double.isNaN(this.theta) || Double.isNaN(this.radius)) {
             throw new UncheckedCoordinateException("Classinvariant hurt");
         }
         assertValGreaterEqualsZero(radius);
         super.assertClassInvariants();
     }
+
+    protected static void assertIsValidAngle(double angle) {
+        if (angle < 0.0 || angle > 360.0) {
+            throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
+        }
+    }
+
+    protected static void assertIsValidCalculatedAngle(double angle) throws CheckedCoordinateException {
+        if (angle < 0.0 || angle > 360.0) {
+            throw new CheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
+        }
+    }
+
 }
 
 

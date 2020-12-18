@@ -25,7 +25,7 @@ public class AbstractCoordinateTest {
 
 
     @Test
-    public void testGetCentralAngel() {
+    public void testGetCentralAngel() throws Coordinate.CheckedCoordinateException {
         //ARRANGE https://de.wikipedia.org/wiki/Orthodrome
         //Check link for example
         SphericCoordinate s1 = new SphericCoordinate(52.517, 13.4, 3.5);
@@ -41,7 +41,7 @@ public class AbstractCoordinateTest {
     }
 
     @Test
-    public void testGetCartesianDistanceSimple() {
+    public void testGetCartesianDistanceSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
         CartesianCoordinate c1 = new CartesianCoordinate();
         CartesianCoordinate c2 = new CartesianCoordinate();

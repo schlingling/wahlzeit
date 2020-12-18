@@ -14,9 +14,9 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     protected final int NACHKOMMASTELLEN = 7;
 
 
+    protected abstract int doHashCode();
 
-    protected abstract int doHashCode()  ;
-    protected abstract boolean doIsEqual(Coordinate coordinate)  ;
+    protected abstract boolean doIsEqual(Coordinate coordinate);
 
 
     /**
@@ -24,13 +24,13 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return distance between this and coordinate
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate)   {
+    public double getCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
         double result = doGetCartesianDistance(coordinate);
         //Post-Condition
-        assertValGreaterEqualsZero(result);
+        assertIsValidDistance(result);
         return result;
     }
 
@@ -40,11 +40,16 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @return central angle between this and coordinate
      */
     @Override
-    public double getCentralAngel(Coordinate coordinate)   {
+    public double getCentralAngel(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
-        //TODO: Post-Condition: Darf ein Winkel negativ sein?
-        return doGetCentralAngle(coordinate);
+        SphericCoordinate sc1 = this.asSphericCoordinate();
+        SphericCoordinate sc2 = coordinate.asSphericCoordinate();
+
+        double res = sc1.doGetCentralAngel(sc2);
+        assertIsValidCentralAngle(res);
+        assertClassInvariants();
+        return res;
     }
 
 
@@ -55,7 +60,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @methodtype query
      */
     @Override
-    public boolean isEqual(Coordinate coordinate)   {
+    public boolean isEqual(Coordinate coordinate) {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
         if (!(coordinate instanceof Coordinate) || !(this instanceof Coordinate)) {
@@ -122,7 +127,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         } catch (Exception e) {
             e.printStackTrace();
         }
-    return false;
+        return false;
     }
 
     @Override
@@ -136,27 +141,17 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * @param coordinate
      * @return cartesian Distance between this and coordinate
      */
-    protected double doGetCartesianDistance(Coordinate coordinate)   {
+    protected double doGetCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
+        assertArgumentNotNull(coordinate);
         CartesianCoordinate c1 = this.asCartesianCoordinate();
         CartesianCoordinate c2 = coordinate.asCartesianCoordinate();
 
         double result = c1.getDistance(c2);
-        assertValGreaterEqualsZero(result);
+        assertIsValidDistance(result);
         assertClassInvariants();
         return result;
     }
-
-    protected double doGetCentralAngle(Coordinate coordinate)   {
-        assertClassInvariants();
-        SphericCoordinate sc1 = this.asSphericCoordinate();
-        SphericCoordinate sc2 = coordinate.asSphericCoordinate();
-
-        //TODO: Post-Condition: Darf ein Winkel negativ sein?
-        assertClassInvariants();
-        return sc1.doGetCentralAngel(sc2);
-    }
-
 
     /**
      * Compares two doubles with buffer-tolerance defined by epsilon
@@ -189,7 +184,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      *
      * @methodtype helper
      */
-    protected void assertClassInvariants()   {
+    protected void assertClassInvariants() {
 
     }
 
@@ -199,30 +194,39 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      *
      * @methodtype helper
      */
-    protected static void assertArgumentNotNull(Object obj)   {
+    protected static void assertArgumentNotNull(Object obj) {
         if (obj == null) {
             throw new IllegalArgumentException("Argument is null");
         }
         ;
     }
 
-    protected static void assertArgumentNotNAN(double argument)   {
-        if (Double.isNaN(argument) ) {
+    protected static void assertArgumentNotNAN(double argument) {
+        if (Double.isNaN(argument)) {
             throw new IllegalArgumentException("Argument is nan");
         }
         ;
     }
 
+    protected static void assertIsValidCentralAngle(double angle) {
+        if (angle < 0.0 || angle > 360.0) {
+            throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
+        }
+    }
 
-    protected static void assertValGreaterEqualsZero(double argument)   {
-        if (argument<0){
-            throw new IllegalArgumentException("Argument should be greater euquals Zero");
-
+    protected static void assertIsValidDistance(double angle) throws CheckedCoordinateException {
+        if (angle < 0.0 || angle > 360.0) {
+            throw new CheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
         }
     }
 
 
+    protected static void assertValGreaterEqualsZero(double argument) {
+        if (argument < 0) {
+            throw new IllegalArgumentException("Argument should be greater euquals Zero");
 
+        }
+    }
 
 
 }
