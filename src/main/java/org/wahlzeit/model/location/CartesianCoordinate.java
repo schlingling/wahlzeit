@@ -3,27 +3,15 @@ package org.wahlzeit.model.location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class CartesianCoordinate extends AbstractCoordinate {
 
-    private double x;
-    private double y;
-    private double z;
+    private final double x;
+    private final double y;
+    private final double z;
 
-
-    /**
-     * Instanciate Coordinate.java with default values x=y=z=0
-     *
-     * @methodtype constructor
-     */
-    public CartesianCoordinate()   {
-        assertClassInvariants();
-        setX(0);
-        setY(0);
-        setZ(0);
-        assertClassInvariants();
-
-    }
+    protected static HashMap<Integer, CartesianCoordinate> hashMap = new HashMap<>();
 
 
     /**
@@ -31,18 +19,42 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate(double x, double y, double z)   {
+    private CartesianCoordinate(double x, double y, double z) {
         assertClassInvariants();
         assertArgumentNotNAN(x);
         assertArgumentNotNAN(y);
         assertArgumentNotNAN(z);
-
-        setX(x);
-        setY(y);
-        setZ(z);
-
+        this.x = x;
+        this.y = y;
+        this.z = z;
         assertClassInvariants();
+    }
 
+    /**
+     * Get or creates the Coordinate with given parameter.
+     * Ensures, that Coordinate is immutable and shared!
+     *
+     * @methodtype helper
+     */
+    public static CartesianCoordinate getOrCreateCoordinate(double x, double y, double z) {
+        CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+        int key = c.hashCode();
+        synchronized (CartesianCoordinate.class) {
+            if (!hashMap.containsKey(key)) {
+                hashMap.put(key, c);
+            }
+        }
+        return hashMap.get(key);
+    }
+
+    /**
+     * Get or creates the Coordinate with default parameter 0,0,0.
+     * Ensures, that Coordinate is immutable and shared!
+     *
+     * @methodtype helper
+     */
+    public static CartesianCoordinate getOrCreateDefaultCoordinate() {
+        return CartesianCoordinate.getOrCreateCoordinate(0,0,0);
     }
 
     /**
@@ -70,42 +82,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     }
 
-    /**
-     * @methodtype set
-     */
-    public void setX(double x) {
-        assertClassInvariants();
-        this.x = x;
-        assertClassInvariants();
-
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setY(double y) {
-        assertClassInvariants();
-        this.y = y;
-        assertClassInvariants();
-
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setZ(double z) {
-        assertClassInvariants();
-        this.z = z;
-        assertClassInvariants();
-
-    }
 
     /**
      * Calculates the distance between CartesianCoordinatecoordinate and this
      *
      * @methodtype query
      */
-    public double getDistance(CartesianCoordinate coordinate)   {
+    public double getDistance(CartesianCoordinate coordinate) {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
@@ -128,7 +111,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected int doHashCode()   {
+    protected int doHashCode() {
         assertClassInvariants();
         int result = 17;
         result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
@@ -144,7 +127,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public CartesianCoordinate asCartesianCoordinate()  throws CheckedCoordinateException {
+    public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException {
         assertClassInvariants();
         return this;
     }
@@ -155,7 +138,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public SphericCoordinate asSphericCoordinate()  throws CheckedCoordinateException {
+    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException {
         assertClassInvariants();
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
@@ -164,24 +147,24 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         double x, y, z;
 
-    try{
-        phi = Math.atan2(this.getY(), this.getX());
-        if (this.getZ() != 0) {
-            theta = Math.atan(
-                    (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
-                            / this.getZ());
-        } else {
-            throw new ArithmeticException("Division by 0");
-        }
+        try {
+            phi = Math.atan2(this.getY(), this.getX());
+            if (this.getZ() != 0) {
+                theta = Math.atan(
+                        (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
+                                / this.getZ());
+            } else {
+                throw new ArithmeticException("Division by 0");
+            }
 
-        radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
-    }catch(Exception e){
-        throw new CheckedCoordinateException("Fehler in der Umwandlung zur SphericCoordinate", e);
-    }
+            radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
+        } catch (Exception e) {
+            throw new CheckedCoordinateException("Fehler in der Umwandlung zur SphericCoordinate", e);
+        }
 
         assertValGreaterEqualsZero(radius);
         assertClassInvariants();
-        return new SphericCoordinate(phi, theta, radius);
+        return  SphericCoordinate.getOrCreateCoordinate(phi, theta, radius);
     }
 
 
@@ -203,7 +186,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 
-
     /**
      * Reads coordinates from database
      *
@@ -213,9 +195,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
     public void readFrom(ResultSet resultSet) throws SQLException {
         assertClassInvariants();
         assertArgumentNotNull(resultSet);
-        this.setX(resultSet.getDouble("location_x"));
-        this.setY(resultSet.getDouble("location_y"));
-        this.setZ(resultSet.getDouble("location_z"));
+
+        //Todo: Wie lösen?
+        //this.setX(resultSet.getDouble("location_x"));
+        //this.setY(resultSet.getDouble("location_y"));
+       // this.setZ(resultSet.getDouble("location_z"));
         assertClassInvariants();
 
     }
@@ -237,8 +221,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     @Override
-    protected void assertClassInvariants()   {
-        if (Double.isNaN(this.x)|| Double.isNaN(this.y) ||Double.isNaN(this.z)){
+    protected void assertClassInvariants() {
+        if (Double.isNaN(this.x) || Double.isNaN(this.y) || Double.isNaN(this.z)) {
             throw new UncheckedCoordinateException("Classinvariant hurt");
         }
 

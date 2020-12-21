@@ -14,11 +14,11 @@ public class AbstractCoordinateTest {
     @Before
     public void setupAbstractCoordinate()   {
 
-        this.sc1 = new SphericCoordinate();
-        this.sc2 = new SphericCoordinate(5,3,10);
+        this.sc1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        this.sc2 = SphericCoordinate.getOrCreateCoordinate(5,3,10);
 
-        this.cc1 = new CartesianCoordinate(5,5,5);
-        this.cc2 = new CartesianCoordinate(10,5,3);
+        this.cc1 =  CartesianCoordinate.getOrCreateCoordinate(5,5,5);
+        this.cc2 = CartesianCoordinate.getOrCreateCoordinate(10,5,3);
 
 
     }
@@ -28,8 +28,8 @@ public class AbstractCoordinateTest {
     public void testGetCentralAngel() throws Coordinate.CheckedCoordinateException {
         //ARRANGE https://de.wikipedia.org/wiki/Orthodrome
         //Check link for example
-        SphericCoordinate s1 = new SphericCoordinate(52.517, 13.4, 3.5);
-        SphericCoordinate s2 = new SphericCoordinate(35.7, 139.767, 3.5);
+        SphericCoordinate s1 = SphericCoordinate.getOrCreateCoordinate(52.517, 13.4, 3.5);
+        SphericCoordinate s2 = SphericCoordinate.getOrCreateCoordinate(35.7, 139.767, 3.5);
         double exp = 80.21;
 
         //ACT
@@ -43,10 +43,10 @@ public class AbstractCoordinateTest {
     @Test
     public void testGetCartesianDistanceSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        CartesianCoordinate c1 = new CartesianCoordinate();
-        CartesianCoordinate c2 = new CartesianCoordinate();
-        SphericCoordinate s1 = new SphericCoordinate();
-        SphericCoordinate s2 = new SphericCoordinate();
+        CartesianCoordinate c1 = CartesianCoordinate.getOrCreateDefaultCoordinate();
+        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateDefaultCoordinate();
+        SphericCoordinate s1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        SphericCoordinate s2 = SphericCoordinate.getOrCreateDefaultCoordinate();
 
         //ACT
         //ASSERT
@@ -61,8 +61,8 @@ public class AbstractCoordinateTest {
     @Test
     public void testGetCartesianDistanceComplex()   {
         //ARRANGE
-        CartesianCoordinate c1 = new CartesianCoordinate(5,5,5);
-        CartesianCoordinate c2 = new CartesianCoordinate(7,7,7);
+        CartesianCoordinate c1 = CartesianCoordinate.getOrCreateCoordinate(5,5,5);
+        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateCoordinate(7,7,7);
 
         //ACT
         double exp = Math.sqrt(Math.pow(c1.getX()-c2.getX(), 2) + Math.pow(c1.getY()-c2.getY(), 2) + Math.pow(c1.getZ()-c2.getZ(), 2));

@@ -14,6 +14,7 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     protected final int NACHKOMMASTELLEN = 7;
 
 
+
     protected abstract int doHashCode();
 
     protected abstract boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException;

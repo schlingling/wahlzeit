@@ -17,8 +17,8 @@ public class SphericCoordinateTest {
     @Before
     public void setupCoordinates()   {
 
-        this.c1 = new SphericCoordinate();
-        this.c2 = new SphericCoordinate(5,5,5);
+        this.c1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        this.c2 = SphericCoordinate.getOrCreateCoordinate(5,5,5);
         this.cNull = null;
 
     }
@@ -86,7 +86,7 @@ public class SphericCoordinateTest {
     @Test
     public void testDoIsEqualSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        SphericCoordinate sc = new SphericCoordinate();
+        SphericCoordinate sc = SphericCoordinate.getOrCreateDefaultCoordinate();
 
         //ACT
         //ASSERT
@@ -97,7 +97,7 @@ public class SphericCoordinateTest {
     @Test
     public void testDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        SphericCoordinate sc = new SphericCoordinate(5,5,5);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,5);
 
         //ACT
         //ASSERT
@@ -109,7 +109,7 @@ public class SphericCoordinateTest {
     @Test
     public void testEqualsComplex()   {
         //ARRANGE
-        SphericCoordinate sc = new SphericCoordinate(5,5,5);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,5);
 
 
         //ACT
@@ -122,7 +122,7 @@ public class SphericCoordinateTest {
     @Test
     public void testNotDoIsEqualComplex() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        SphericCoordinate sc = new SphericCoordinate(5,6,5);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,6,5);
 
         //ACT
         //ASSERT
@@ -133,7 +133,7 @@ public class SphericCoordinateTest {
     @Test
     public void testHashCode()   {
         //ARRANGE
-        SphericCoordinate sc = new SphericCoordinate(5,5,5);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,5);
 
         int h1 = c2.hashCode();
         int h2 = sc.hashCode();
@@ -145,12 +145,12 @@ public class SphericCoordinateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testValueIsNan(){
-        SphericCoordinate sc = new SphericCoordinate(1,1,Double.NaN);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,Double.NaN);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testClassInvariants(){
-        SphericCoordinate sc = new SphericCoordinate(1,1,-1);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,-1);
     }
 
 

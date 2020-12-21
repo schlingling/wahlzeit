@@ -2,32 +2,19 @@ package org.wahlzeit.model.location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
 
     //PHYSICAL REPRESENTATION  representation of Spherical coordinates
     //ATTENTION: NOT MATHEMATICAL REPRESENTATION --> phi and tetha NOT swapped (https://en.wikipedia.org/wiki/Spherical_coordinate_system)
-    private double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
-    private double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
-    private double radius; //Distance from origin
+    private final double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
+    private final double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
+    private final double radius; //Distance from origin
 
+    private static HashMap<Integer, SphericCoordinate> hashMap = new HashMap();
 
-    /**
-     * Instanciate Coordinate.java with default values phi=theta=radius=0
-     *
-     * @methodtype constructor
-     */
-    public SphericCoordinate() {
-        assertClassInvariants();
-
-        this.setPhi(0);
-        this.setRadius(0);
-        this.setTheta(0);
-
-        assertClassInvariants();
-
-    }
 
     /**
      * Instanciate Location with specific values phi, theta, radius
@@ -35,7 +22,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
 
-    public SphericCoordinate(double phi, double theta, double radius) {
+    private SphericCoordinate(double phi, double theta, double radius) {
         assertClassInvariants();
         assertArgumentNotNAN(phi);
         assertArgumentNotNAN(theta);
@@ -45,52 +32,40 @@ public class SphericCoordinate extends AbstractCoordinate {
         assertIsValidAngle(theta);
         assertValGreaterEqualsZero(radius);
 
-        this.setPhi(phi);
-        this.setTheta(theta);
-        this.setRadius(radius);
-
-        assertClassInvariants();
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setPhi(double phi) {
-        assertClassInvariants();
-        assertArgumentNotNAN(phi);
-        assertIsValidAngle(phi);
-
         this.phi = phi;
-        assertClassInvariants();
-
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setTheta(double theta) {
-        assertClassInvariants();
-
-        assertArgumentNotNAN(phi);
-        assertIsValidAngle(theta);
-
-
         this.theta = theta;
-        assertClassInvariants();
+        this.radius = radius;
 
+        assertClassInvariants();
     }
 
+
     /**
-     * @methodtype set
+     * Get or creates the Coordinate with given parameter
+     * Ensures, that Coordinate is immutable and shared!
+     *
+     * @methodtype helper
      */
-    public void setRadius(double radius) {
-        assertClassInvariants();
-        assertArgumentNotNAN(phi);
-        assertValGreaterEqualsZero(radius);
+    public static SphericCoordinate getOrCreateCoordinate(double phi, double theta, double radius) {
+        SphericCoordinate c = new SphericCoordinate(phi, theta, radius);
+        int key = c.hashCode();
+        synchronized (SphericCoordinate.class) {
+            if (!hashMap.containsKey(key)) {
+                hashMap.put(key, c);
+            }
+        }
+        return hashMap.get(key);
+    }
 
-        this.radius = radius;
-        assertClassInvariants();
 
+    /**
+     * Get or creates the Coordinate with default parameter 0,0,0.
+     * Ensures, that Coordinate is immutable and shared!
+     *
+     * @methodtype helper
+     */
+    public static SphericCoordinate getOrCreateDefaultCoordinate() {
+        return getOrCreateCoordinate(0,0,0);
     }
 
     /**
@@ -127,15 +102,15 @@ public class SphericCoordinate extends AbstractCoordinate {
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException {
         assertClassInvariants();
-        double x,y,z;
+        double x, y, z;
         try {
-             x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
-             y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
-             z = getRadius() * Math.cos(getTheta());
-        }catch (Exception e){
+            x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
+            y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
+            z = getRadius() * Math.cos(getTheta());
+        } catch (Exception e) {
             throw new CheckedCoordinateException("Fehler in der Umwandlung zu CartesianCoordinate", e);
         }
-        return new CartesianCoordinate(x, y, z);
+        return CartesianCoordinate.getOrCreateCoordinate(x, y, z);
     }
 
     /**
@@ -145,7 +120,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException{
+    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException {
         assertClassInvariants();
         return this;
     }
@@ -176,9 +151,12 @@ public class SphericCoordinate extends AbstractCoordinate {
         assertClassInvariants();
         assertArgumentNotNull(resultSet);
 
-        this.setPhi(resultSet.getDouble("location_phi"));
-        this.setTheta(resultSet.getDouble("location_theta"));
-        this.setRadius(resultSet.getDouble("location_radius"));
+        //Todo: Wie lösen?
+        //this.setPhi(resultSet.getDouble("location_phi"));
+       // this.setTheta(resultSet.getDouble("location_theta"));
+        //this.setRadius(resultSet.getDouble("location_radius"));
+
+
         assertClassInvariants();
 
     }
