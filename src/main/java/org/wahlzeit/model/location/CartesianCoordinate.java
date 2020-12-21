@@ -11,6 +11,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private final double y;
     private final double z;
 
+    //Map for storing&sharing immutable coordinates
     protected static HashMap<Integer, CartesianCoordinate> hashMap = new HashMap<>();
 
 
@@ -24,9 +25,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertArgumentNotNAN(x);
         assertArgumentNotNAN(y);
         assertArgumentNotNAN(z);
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = rint(x, NACHKOMMASTELLEN);
+        this.y = rint(y, NACHKOMMASTELLEN);
+        this.z = rint(z, NACHKOMMASTELLEN);
         assertClassInvariants();
     }
 
@@ -54,7 +55,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype helper
      */
     public static CartesianCoordinate getOrCreateDefaultCoordinate() {
-        return CartesianCoordinate.getOrCreateCoordinate(0,0,0);
+        return CartesianCoordinate.getOrCreateCoordinate(0, 0, 0);
     }
 
     /**
@@ -105,13 +106,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 
+
+
     /**
      * calculates hashCode from coordinates with 7 digits tolerance
      *
      * @methodtype query
      */
+
     @Override
-    protected int doHashCode() {
+    public int hashCode() {
         assertClassInvariants();
         int result = 17;
         result = (int) (31 * result + rint(getX(), NACHKOMMASTELLEN));
@@ -164,7 +168,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         assertValGreaterEqualsZero(radius);
         assertClassInvariants();
-        return  SphericCoordinate.getOrCreateCoordinate(phi, theta, radius);
+        return SphericCoordinate.getOrCreateCoordinate(phi, theta, radius);
     }
 
 
@@ -180,9 +184,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         CartesianCoordinate c = coordinate.asCartesianCoordinate();
 
-        return (compare(this.getX(), c.getX(), DELTA) &&
-                compare(this.getY(), c.getY(), DELTA) &&
-                compare(this.getZ(), c.getZ(), DELTA));
+        int r1 = Double.compare(this.getX(), c.getX());
+        int r2 = Double.compare(this.getY(), c.getY());
+        int r3 = Double.compare(this.getZ(), c.getZ());
+        return (r1==0)&&(r2==0)&&(r3==0);
     }
 
 
@@ -199,7 +204,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         //Todo: Wie lösen?
         //this.setX(resultSet.getDouble("location_x"));
         //this.setY(resultSet.getDouble("location_y"));
-       // this.setZ(resultSet.getDouble("location_z"));
+        // this.setZ(resultSet.getDouble("location_z"));
         assertClassInvariants();
 
     }
@@ -220,6 +225,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     }
 
+
+
+    /**
+     * Asserts Classinvariants
+     *
+     * @methodtype helper
+     */
     @Override
     protected void assertClassInvariants() {
         if (Double.isNaN(this.x) || Double.isNaN(this.y) || Double.isNaN(this.z)) {

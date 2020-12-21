@@ -77,12 +77,12 @@ public class AbstractCoordinateTest {
     @Test
     public void testCompare(){
         //ARRANGE
-        double d1 = 0.123456789;
-        double d2 = 0.123456;
+        double d1 = AbstractCoordinate.rint(0.123456789, AbstractCoordinate.NACHKOMMASTELLEN);
+        double d2 = AbstractCoordinate.rint(0.12345678910510515151, AbstractCoordinate.NACHKOMMASTELLEN);
 
         //ACT
         //ASSERT
-        assertTrue(AbstractCoordinate.compare(d1,d2,0.000001));
+        assertTrue(Double.compare(d1,d2)==0);
 
     }
 

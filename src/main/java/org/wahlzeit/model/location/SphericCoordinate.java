@@ -13,6 +13,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     private final double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
     private final double radius; //Distance from origin
 
+    //Map for storing&sharing immutable coordinates
     private static HashMap<Integer, SphericCoordinate> hashMap = new HashMap();
 
 
@@ -32,9 +33,9 @@ public class SphericCoordinate extends AbstractCoordinate {
         assertIsValidAngle(theta);
         assertValGreaterEqualsZero(radius);
 
-        this.phi = phi;
-        this.theta = theta;
-        this.radius = radius;
+        this.phi = rint(phi,NACHKOMMASTELLEN);
+        this.theta = rint(theta,NACHKOMMASTELLEN);
+        this.radius = rint(radius,NACHKOMMASTELLEN);
 
         assertClassInvariants();
     }
@@ -126,19 +127,23 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
 
+
     /**
      * Checks wether this is equal to coordinate
      *
      * @methodtype query
      */
+    @Override
     protected boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);
 
         SphericCoordinate c = coordinate.asSphericCoordinate();
-        return (compare(this.getPhi(), c.getPhi(), DELTA) &&
-                compare(this.getTheta(), c.getTheta(), DELTA) &&
-                compare(this.getRadius(), c.getRadius(), DELTA));
+
+        int r1 = Double.compare(this.getPhi(), c.getPhi());
+        int r2 = Double.compare(this.getTheta(), c.getTheta());
+        int r3 = Double.compare(this.getRadius(), c.getRadius());
+        return (r1==0)&&(r2==0)&&(r3==0);
     }
 
     /**
@@ -186,7 +191,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    protected int doHashCode() {
+    public int hashCode() {
         assertClassInvariants();
 
         int result = 17;
@@ -237,6 +242,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     }
 
+    /**
+     * Asserts class invariants
+     *
+     * @methodtype helper
+     */
     @Override
     protected void assertClassInvariants() {
         if (Double.isNaN(this.phi) || Double.isNaN(this.theta) || Double.isNaN(this.radius)) {
@@ -246,12 +256,22 @@ public class SphericCoordinate extends AbstractCoordinate {
         super.assertClassInvariants();
     }
 
+    /**
+     * Asserts valid angle
+     *
+     * @methodtype helper
+     */
     protected static void assertIsValidAngle(double angle) {
         if (angle < 0.0 || angle > 360.0) {
             throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
         }
     }
 
+    /**
+     * Assert valid angle
+     *
+     * @methodtype helper
+     */
     protected static void assertIsValidCalculatedAngle(double angle) throws CheckedCoordinateException {
         if (angle < 0.0 || angle > 360.0) {
             throw new CheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);

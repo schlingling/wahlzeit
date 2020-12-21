@@ -8,17 +8,11 @@ import java.sql.SQLException;
 public abstract class AbstractCoordinate extends DataObject implements Coordinate {
 
     /**
-     * Konstanten, für Toleranz bei double Vergleich
+     * Konstante, für Rundung der doubles
      */
-    protected final double DELTA = 0.0000001;
-    protected final int NACHKOMMASTELLEN = 7;
-
-
-
-    protected abstract int doHashCode();
+    protected static final int NACHKOMMASTELLEN = 7;
 
     protected abstract boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException;
-
 
     /**
      * @param coordinate
@@ -145,35 +139,17 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         Coordinate cord = (Coordinate) obj;
 
         boolean res = false;
+
         try {
             res = this.isEqual(cord);
-
-        } catch (Exception e) {
+        } catch (CheckedCoordinateException e) {
+            e.printStackTrace();
         }
+
         return res;
 
     }
 
-    @Override
-    public int hashCode() {
-        assertClassInvariants();
-        return doHashCode();
-
-    }
-
-
-    /**
-     * Compares two doubles with buffer-tolerance defined by epsilon
-     *
-     * @methodtype helper
-     */
-    protected static boolean compare(double a, double b, double epsilon) {
-        assertArgumentNotNAN(a);
-        assertArgumentNotNAN(b);
-        assertArgumentNotNAN(epsilon);
-
-        return Math.abs(a - b) < epsilon;
-    }
 
     /**
      * Rints a double value by decimalPoints
@@ -210,6 +186,11 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         ;
     }
 
+    /**
+     * Asserts argument not NAN
+     *
+     * @methodtype helper
+     */
     protected static void assertArgumentNotNAN(double argument) {
         if (Double.isNaN(argument)) {
             throw new IllegalArgumentException("Argument is nan");
@@ -217,12 +198,22 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         ;
     }
 
+    /**
+     * Assert valdi central angle
+     *
+     * @methodtype helper
+     */
     protected static void assertIsValidCentralAngle(double angle) {
         if (angle < 0.0 || angle > 360.0) {
             throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
         }
     }
 
+    /**
+     * Asserts valid distance greater equals 0
+     *
+     * @methodtype helper
+     */
     protected static void assertIsValidDistance(double angle) throws CheckedCoordinateException {
         if (angle < 0.0 || angle > 360.0) {
             throw new UncheckedCoordinateException("Central Angle should always be between 0 and 360 deg but was " + angle);
@@ -230,6 +221,11 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
     }
 
 
+    /**
+     * Assert valid value greater equal 0
+     *
+     * @methodtype helper
+     */
     protected static void assertValGreaterEqualsZero(double argument) {
         if (argument < 0) {
             throw new IllegalArgumentException("Argument should be greater euquals Zero");

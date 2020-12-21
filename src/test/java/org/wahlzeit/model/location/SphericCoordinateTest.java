@@ -153,5 +153,21 @@ public class SphericCoordinateTest {
         SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(5,5,-1);
     }
 
+    @Test
+    public void testImmutiability(){
+        //Nothing to test because all attributes of CartesianCoordinate are final and no setters offered!
+    }
+
+    @Test
+    public void testShareability(){
+        //ARRANGE
+        SphericCoordinate cc1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        SphericCoordinate cc2 = SphericCoordinate.getOrCreateDefaultCoordinate();
+
+        //ACT & ASSERT
+        assertTrue(cc1==cc2);
+
+    }
+
 
 }
