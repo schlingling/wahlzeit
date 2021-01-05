@@ -196,7 +196,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertClassInvariants();
         assertArgumentNotNull(resultSet);
 
-        //Todo: Wie lösen?
+        //Todo: Wie lösen??
         //this.setX(resultSet.getDouble("location_x"));
         //this.setY(resultSet.getDouble("location_y"));
         // this.setZ(resultSet.getDouble("location_z"));
