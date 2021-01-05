@@ -4,6 +4,7 @@ import org.wahlzeit.services.DataObject;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public abstract class AbstractCoordinate extends DataObject implements Coordinate {
 
@@ -11,6 +12,8 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      * Konstante, für Rundung der doubles
      */
     protected static final int NACHKOMMASTELLEN = 7;
+    //Map for storing&sharing immutable coordinates
+
 
     protected abstract boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException;
 
@@ -115,6 +118,12 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
         //donothing
     }
 
+
+    @Override
+    public int hashCode() {
+        assertClassInvariants();
+        return this.asCartesianCoordinate().hashCode();
+    }
 
     @Override
     public boolean isDirty() {

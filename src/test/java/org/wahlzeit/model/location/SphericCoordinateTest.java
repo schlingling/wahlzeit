@@ -17,7 +17,7 @@ public class SphericCoordinateTest {
     @Before
     public void setupCoordinates()   {
 
-        this.c1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        this.c1 = SphericCoordinate.getOrCreateCoordinate();
         this.c2 = SphericCoordinate.getOrCreateCoordinate(5,5,5);
         this.cNull = null;
 
@@ -86,7 +86,7 @@ public class SphericCoordinateTest {
     @Test
     public void testDoIsEqualSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        SphericCoordinate sc = SphericCoordinate.getOrCreateDefaultCoordinate();
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate();
 
         //ACT
         //ASSERT
@@ -161,8 +161,8 @@ public class SphericCoordinateTest {
     @Test
     public void testShareability(){
         //ARRANGE
-        SphericCoordinate cc1 = SphericCoordinate.getOrCreateDefaultCoordinate();
-        SphericCoordinate cc2 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        SphericCoordinate cc1 = SphericCoordinate.getOrCreateCoordinate();
+        SphericCoordinate cc2 = SphericCoordinate.getOrCreateCoordinate();
 
         //ACT & ASSERT
         assertTrue(cc1==cc2);

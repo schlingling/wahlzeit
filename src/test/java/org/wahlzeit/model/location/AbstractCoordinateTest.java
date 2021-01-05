@@ -3,18 +3,26 @@ package org.wahlzeit.model.location;
 import org.junit.Before;
 import org.junit.Test;
 
-import static  org.junit.Assert.*;
 
-public class AbstractCoordinateTest {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import static  org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+
+public class AbstractCoordinateTest extends AbstractCoordinate {
 
     private CartesianCoordinate cc1,cc2;
     private SphericCoordinate sc1,sc2;
+
+    CartesianCoordinate cartesianMock = mock(CartesianCoordinate.class);
 
 
     @Before
     public void setupAbstractCoordinate()   {
 
-        this.sc1 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        this.sc1 = SphericCoordinate.getOrCreateCoordinate();
         this.sc2 = SphericCoordinate.getOrCreateCoordinate(5,3,10);
 
         this.cc1 =  CartesianCoordinate.getOrCreateCoordinate(5,5,5);
@@ -43,10 +51,10 @@ public class AbstractCoordinateTest {
     @Test
     public void testGetCartesianDistanceSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        CartesianCoordinate c1 = CartesianCoordinate.getOrCreateDefaultCoordinate();
-        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateDefaultCoordinate();
-        SphericCoordinate s1 = SphericCoordinate.getOrCreateDefaultCoordinate();
-        SphericCoordinate s2 = SphericCoordinate.getOrCreateDefaultCoordinate();
+        CartesianCoordinate c1 = CartesianCoordinate.getOrCreateCoordinate();
+        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateCoordinate();
+        SphericCoordinate s1 = SphericCoordinate.getOrCreateCoordinate();
+        SphericCoordinate s2 = SphericCoordinate.getOrCreateCoordinate();
 
         //ACT
         //ASSERT
@@ -96,4 +104,28 @@ public class AbstractCoordinateTest {
 
     }
 
+    @Override
+    protected boolean doIsEqual(Coordinate coordinate) throws CheckedCoordinateException {
+        return false;
+    }
+
+    @Override
+    public CartesianCoordinate asCartesianCoordinate()  {
+        return null;
+    }
+
+    @Override
+    public SphericCoordinate asSphericCoordinate() {
+        return null;
+    }
+
+    @Override
+    public void readFrom(ResultSet rset) throws SQLException {
+
+    }
+
+    @Override
+    public void writeOn(ResultSet rset) throws SQLException {
+
+    }
 }

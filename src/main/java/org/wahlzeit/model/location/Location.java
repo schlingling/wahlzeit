@@ -17,7 +17,7 @@ public class Location extends DataObject {
      */
     public Location() {
         try {
-            this.coordinate = CartesianCoordinate.getOrCreateDefaultCoordinate();
+            this.coordinate = CartesianCoordinate.getOrCreateCoordinate();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,8 +13,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     private final double theta; //inclination, polar angle, fangle with respect to polar axis, from z-axis
     private final double radius; //Distance from origin
 
-    //Map for storing&sharing immutable coordinates
-    private static HashMap<Integer, SphericCoordinate> hashMap = new HashMap();
+    protected static HashMap<Integer, SphericCoordinate> hashMap = new HashMap<>();
 
 
     /**
@@ -48,6 +47,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype helper
      */
     public static SphericCoordinate getOrCreateCoordinate(double phi, double theta, double radius) {
+
         SphericCoordinate c = new SphericCoordinate(phi, theta, radius);
         int key = c.hashCode();
         synchronized (SphericCoordinate.class) {
@@ -56,6 +56,7 @@ public class SphericCoordinate extends AbstractCoordinate {
             }
         }
         return hashMap.get(key);
+
     }
 
 
@@ -65,7 +66,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *
      * @methodtype helper
      */
-    public static SphericCoordinate getOrCreateDefaultCoordinate() {
+    public static SphericCoordinate getOrCreateCoordinate() {
         return getOrCreateCoordinate(0,0,0);
     }
 
@@ -101,16 +102,12 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException {
+    public CartesianCoordinate asCartesianCoordinate()  {
         assertClassInvariants();
         double x, y, z;
-        try {
             x = getRadius() * Math.sin(getTheta()) * Math.cos(getPhi());
             y = getRadius() * Math.sin(getTheta()) * Math.sin(getPhi());
             z = getRadius() * Math.cos(getTheta());
-        } catch (Exception e) {
-            throw new CheckedCoordinateException("Fehler in der Umwandlung zu CartesianCoordinate", e);
-        }
         return CartesianCoordinate.getOrCreateCoordinate(x, y, z);
     }
 
@@ -121,7 +118,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
-    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException {
+    public SphericCoordinate asSphericCoordinate()  {
         assertClassInvariants();
         return this;
     }
@@ -181,24 +178,6 @@ public class SphericCoordinate extends AbstractCoordinate {
         resultSet.updateDouble("location_theta", this.getTheta());
         resultSet.updateDouble("location_radius", this.getRadius());
         assertClassInvariants();
-
-    }
-
-
-    /**
-     * calculates hashCode from coordinates with 7 digits tolerance
-     *
-     * @methodtype query
-     */
-    @Override
-    public int hashCode() {
-        assertClassInvariants();
-
-        int result = 17;
-        result = (int) (31 * result + rint(getPhi(), NACHKOMMASTELLEN));
-        result = (int) (31 * result + rint(getTheta(), NACHKOMMASTELLEN));
-        result = (int) (31 * result + rint(getRadius(), NACHKOMMASTELLEN));
-        return result;
 
     }
 

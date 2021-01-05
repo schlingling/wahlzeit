@@ -11,7 +11,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private final double y;
     private final double z;
 
-    //Map for storing&sharing immutable coordinates
     protected static HashMap<Integer, CartesianCoordinate> hashMap = new HashMap<>();
 
 
@@ -54,7 +53,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype helper
      */
-    public static CartesianCoordinate getOrCreateDefaultCoordinate() {
+    public static CartesianCoordinate getOrCreateCoordinate() {
         return CartesianCoordinate.getOrCreateCoordinate(0, 0, 0);
     }
 
@@ -106,8 +105,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
 
-
-
     /**
      * calculates hashCode from coordinates with 7 digits tolerance
      *
@@ -131,7 +128,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException {
+    public CartesianCoordinate asCartesianCoordinate() {
         assertClassInvariants();
         return this;
     }
@@ -142,7 +139,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @methodtype query
      */
-    public SphericCoordinate asSphericCoordinate() throws CheckedCoordinateException {
+    public SphericCoordinate asSphericCoordinate() {
         assertClassInvariants();
 
         double phi; //azimuth, angle of rotation from the inital meridian plane--> x-axis
@@ -151,24 +148,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         double x, y, z;
 
-        try {
-            phi = Math.atan2(this.getY(), this.getX());
-            if (this.getZ() != 0) {
-                theta = Math.atan(
-                        (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
-                                / this.getZ());
-            } else {
-                throw new ArithmeticException("Division by 0");
-            }
-
-            radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
-        } catch (Exception e) {
-            throw new CheckedCoordinateException("Fehler in der Umwandlung zur SphericCoordinate", e);
+        phi = Math.atan2(this.getY(), this.getX());
+        if (this.getZ() != 0) {
+            theta = Math.atan(
+                    (Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)))
+                            / this.getZ());
+        } else {
+            throw new ArithmeticException("Division by 0");
         }
+
+        radius = Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2) + Math.pow(this.getZ(), 2));
 
         assertValGreaterEqualsZero(radius);
         assertClassInvariants();
-        return SphericCoordinate.getOrCreateCoordinate(phi, theta, radius);
+        SphericCoordinate sc = SphericCoordinate.getOrCreateCoordinate(phi, theta, radius);
+
+        return sc;
     }
 
 
@@ -187,7 +182,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         int r1 = Double.compare(this.getX(), c.getX());
         int r2 = Double.compare(this.getY(), c.getY());
         int r3 = Double.compare(this.getZ(), c.getZ());
-        return (r1==0)&&(r2==0)&&(r3==0);
+        return (r1 == 0) && (r2 == 0) && (r3 == 0);
     }
 
 
@@ -224,7 +219,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertClassInvariants();
 
     }
-
 
 
     /**

@@ -1,6 +1,5 @@
 package org.wahlzeit.model.location;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -127,12 +126,12 @@ public class CartesianCoordinateTest {
         cc6=Math.sqrt(Math.pow(c6.getX(), 2) + Math.pow(c6.getY(), 2) + Math.pow(c6.getZ(), 2));
 
         //ASSERT
-        assertEquals(cc1, CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c1), 7);
-        assertEquals(cc2,CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c2), 7);
-        assertEquals(cc3,CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c3), 7);
-        assertEquals(cc4,CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c4), 7);
-        assertEquals(cc5,CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c5), 7);
-        assertEquals(cc5,CartesianCoordinate.getOrCreateDefaultCoordinate().getDistance(c6), 7);
+        assertEquals(cc1, CartesianCoordinate.getOrCreateCoordinate().getDistance(c1), 7);
+        assertEquals(cc2,CartesianCoordinate.getOrCreateCoordinate().getDistance(c2), 7);
+        assertEquals(cc3,CartesianCoordinate.getOrCreateCoordinate().getDistance(c3), 7);
+        assertEquals(cc4,CartesianCoordinate.getOrCreateCoordinate().getDistance(c4), 7);
+        assertEquals(cc5,CartesianCoordinate.getOrCreateCoordinate().getDistance(c5), 7);
+        assertEquals(cc5,CartesianCoordinate.getOrCreateCoordinate().getDistance(c6), 7);
 
 
 
@@ -150,7 +149,7 @@ public class CartesianCoordinateTest {
         double e = 1.1456456;
 
         CartesianCoordinate c1 = CartesianCoordinate.getOrCreateCoordinate(b,c,d);
-        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateCoordinate(1.1213454222,1.1341646222,1.1787786222);
+        CartesianCoordinate c2 = CartesianCoordinate.getOrCreateCoordinate(1.121345464374852,1.1341646167137311717578687257867863,1.1787786578657867865);
         CartesianCoordinate c3 = CartesianCoordinate.getOrCreateCoordinate(1.12,1.1341646222,1.1787786222);
 
 
@@ -211,8 +210,8 @@ public class CartesianCoordinateTest {
     @Test (expected = Coordinate.CheckedCoordinateException.class)
     public void testDoIsEqualSimple() throws Coordinate.CheckedCoordinateException {
         //ARRANGE
-        CartesianCoordinate cc1 = CartesianCoordinate.getOrCreateDefaultCoordinate();
-        CartesianCoordinate cc2 = CartesianCoordinate.getOrCreateDefaultCoordinate();
+        CartesianCoordinate cc1 = CartesianCoordinate.getOrCreateCoordinate();
+        CartesianCoordinate cc2 = CartesianCoordinate.getOrCreateCoordinate();
 
         //ACT
         //ASSERT
@@ -290,8 +289,8 @@ public class CartesianCoordinateTest {
     @Test
     public void testShareability(){
         //ARRANGE
-        CartesianCoordinate cc1 = CartesianCoordinate.getOrCreateDefaultCoordinate();
-        CartesianCoordinate cc2 = CartesianCoordinate.getOrCreateDefaultCoordinate();
+        CartesianCoordinate cc1 = CartesianCoordinate.getOrCreateCoordinate();
+        CartesianCoordinate cc2 = CartesianCoordinate.getOrCreateCoordinate();
 
         //ACT & ASSERT
         System.out.println(cc1);

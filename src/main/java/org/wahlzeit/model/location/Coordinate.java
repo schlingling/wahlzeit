@@ -2,11 +2,11 @@ package org.wahlzeit.model.location;
 
 public interface Coordinate {
 
-    public CartesianCoordinate asCartesianCoordinate() throws CheckedCoordinateException;
+    public CartesianCoordinate asCartesianCoordinate() ;
 
     public double getCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException;
 
-    public SphericCoordinate asSphericCoordinate()throws CheckedCoordinateException;
+    public SphericCoordinate asSphericCoordinate();
 
     public double getCentralAngel(Coordinate coordinate) throws CheckedCoordinateException;
 
