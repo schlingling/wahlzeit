@@ -1,9 +1,16 @@
 package org.wahlzeit.model;
 
 
+import org.wahlzeit.utils.DesignPatternInstance;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@DesignPatternInstance(
+        patternName = "Singleton",
+        participants = {},
+        roleOfAnnotatedClass = "Singleton"
+)
 public class CarPhotoManager extends PhotoManager {
 
     @Override
