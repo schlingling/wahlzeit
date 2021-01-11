@@ -34,6 +34,7 @@ import org.wahlzeit.utils.DesignPatternInstance;
 @DesignPatternInstance(
 		patternName = "Singleton",
 		participants = {},
+		type = "creational",
 		roleOfAnnotatedClass = "Singleton"
 )
 public class PhotoManager extends ObjectManager {

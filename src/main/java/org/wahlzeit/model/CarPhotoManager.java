@@ -9,6 +9,7 @@ import java.sql.SQLException;
 @DesignPatternInstance(
         patternName = "Singleton",
         participants = {},
+        type = "creational",
         roleOfAnnotatedClass = "Singleton"
 )
 public class CarPhotoManager extends PhotoManager {
