@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface DesignPatternInstance {
+public @interface StructuralDesignPatternInstance {
     String patternName();
+    String[] metaParticipants();
     String[] participants();
-    String type();
     String roleOfAnnotatedClass();
 
 }

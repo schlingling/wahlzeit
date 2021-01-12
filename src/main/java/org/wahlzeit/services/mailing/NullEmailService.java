@@ -22,6 +22,7 @@ package org.wahlzeit.services.mailing;
 
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.SysLog;
+import org.wahlzeit.utils.BehaviouralDesignPatternInstance;
 
 /**
  * 
@@ -31,22 +32,26 @@ import org.wahlzeit.services.SysLog;
 public class NullEmailService implements EmailService {
 
 	@Override
+	@BehaviouralDesignPatternInstance(patternName = "Null Object", metaParticipants = {"none"}, participants = {"none"}, roleOfAnnotatedMethod = "Null Object")
 	public void sendEmail(EmailAddress from, EmailAddress to, String subject, String body) throws MailingException {
 		SysLog.logSysInfo("Called sendEmail (no bcc) on null implementation");
 	}
 	
 	@Override
+	@BehaviouralDesignPatternInstance(patternName = "Null Object", metaParticipants = {"none"}, participants = {"none"}, roleOfAnnotatedMethod = "Null Object")
 	public boolean sendEmailIgnoreException(EmailAddress from, EmailAddress to, String subject, String body) {
 		SysLog.logSysInfo("Called sendEmailIgnoreException (no bcc) on null implementation");
 		return true;
 	}
 	
 	@Override
+	@BehaviouralDesignPatternInstance(patternName = "Null Object", metaParticipants = {"none"}, participants = {"none"}, roleOfAnnotatedMethod = "Null Object")
 	public void sendEmail(EmailAddress from, EmailAddress to, EmailAddress bcc, String subject, String body) throws MailingException {
 		SysLog.logSysInfo("Called sendEmail (with bcc) on null implementation");
 	}
 
 	@Override
+	@BehaviouralDesignPatternInstance(patternName = "Null Object", metaParticipants = {"none"}, participants = {"none"}, roleOfAnnotatedMethod = "Null Object")
 	public boolean sendEmailIgnoreException(EmailAddress from, EmailAddress to, EmailAddress bcc, String subject, String body) {
 		SysLog.logSysInfo("Called sendEmailIgnoreException (with bcc) on null implementation");
 		return true;

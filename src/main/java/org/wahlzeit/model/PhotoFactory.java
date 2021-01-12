@@ -23,16 +23,16 @@ package org.wahlzeit.model;
 import java.sql.*;
 
 import org.wahlzeit.services.*;
-import org.wahlzeit.utils.DesignPatternInstance;
+import org.wahlzeit.utils.CreationalDesignPatternInstance;
 
 /**
  * An Abstract Factory for creating photos and related objects.
  */
 
-@DesignPatternInstance(
+@CreationalDesignPatternInstance(
         patternName = "Abstract Factory",
-        participants = {"Abstract Factory", "Abstract Product", "Concrete Factory", "Concrete Product"},
-        type = "creational",
+        metaParticipants = {"Abstract Factory", "Abstract Product", "Concrete Factory", "Concrete Product"},
+        participants = {"PhotoFactory", "Photo", "CarPhotoFactory", "CarPhoto"},
         roleOfAnnotatedClass = "Abstract Factory"
 )
 public class PhotoFactory {

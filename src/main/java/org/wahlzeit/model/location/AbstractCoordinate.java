@@ -1,7 +1,7 @@
 package org.wahlzeit.model.location;
 
 import org.wahlzeit.services.DataObject;
-import org.wahlzeit.utils.DesignPatternInstance;
+import org.wahlzeit.utils.BehaviouralDesignPatternInstance;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,7 +23,12 @@ public abstract class AbstractCoordinate extends DataObject implements Coordinat
      */
 
     @Override
-
+    @BehaviouralDesignPatternInstance(
+            patternName = "Template Method",
+            metaParticipants = {"Template Method", "Implementation Method"},
+            participants = {"getCartesianDistance()", "asCartesianDistance"},
+            roleOfAnnotatedMethod = "Template Method"
+    )
     public double getCartesianDistance(Coordinate coordinate) throws CheckedCoordinateException {
         assertClassInvariants();
         assertArgumentNotNull(coordinate);

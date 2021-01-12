@@ -21,11 +21,18 @@
 package org.wahlzeit.services.mailing;
 
 import org.wahlzeit.services.EmailAddress;
+import org.wahlzeit.utils.StructuralDesignPatternInstance;
 
 /**
  * An EmailServer can send emails. Various implementations exist.
  *
  */
+@StructuralDesignPatternInstance(
+		patternName = "Bridge",
+		metaParticipants ={"Interface","Abstraction", "Implementation"} ,
+		participants = {"EmailService", "AbstractEmailService", "SmtpEmailService"},
+		roleOfAnnotatedClass = "Interface"
+)
 public interface EmailService {
 
 	/**

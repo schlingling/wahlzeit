@@ -1,15 +1,15 @@
 package org.wahlzeit.model;
 
 
-import org.wahlzeit.utils.DesignPatternInstance;
+import org.wahlzeit.utils.CreationalDesignPatternInstance;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@DesignPatternInstance(
+@CreationalDesignPatternInstance(
         patternName = "Singleton",
+        metaParticipants = {},
         participants = {},
-        type = "creational",
         roleOfAnnotatedClass = "Singleton"
 )
 public class CarPhotoManager extends PhotoManager {

@@ -25,10 +25,17 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.wahlzeit.services.EmailAddress;
+import org.wahlzeit.utils.StructuralDesignPatternInstance;
 
 /**
  * 
  */
+@StructuralDesignPatternInstance(
+		patternName = "Bridge",
+		metaParticipants ={"Interface","Abstraction", "Implementation"} ,
+		participants = {"EmailService", "AbstractEmailService", "SmtpEmailService"},
+		roleOfAnnotatedClass = "Implementation"
+)
 public class SmtpEmailService extends AbstractEmailService {
 	
 	/**

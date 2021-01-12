@@ -26,15 +26,15 @@ import java.util.*;
 
 import org.wahlzeit.main.*;
 import org.wahlzeit.services.*;
-import org.wahlzeit.utils.DesignPatternInstance;
+import org.wahlzeit.utils.CreationalDesignPatternInstance;
 
 /**
  * A photo manager provides access to and manages photos.
  */
-@DesignPatternInstance(
+@CreationalDesignPatternInstance(
 		patternName = "Singleton",
+		metaParticipants = {},
 		participants = {},
-		type = "creational",
 		roleOfAnnotatedClass = "Singleton"
 )
 public class PhotoManager extends ObjectManager {

@@ -25,11 +25,18 @@ import javax.mail.Message;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.SysLog;
 import org.wahlzeit.utils.StringUtil;
+import org.wahlzeit.utils.StructuralDesignPatternInstance;
 
 /**
  * Abstract superclass for non-trivial EmailServer implementations.
  * 
  */
+@StructuralDesignPatternInstance(
+		patternName = "Bridge",
+		metaParticipants ={"Interface","Abstraction", "Implementation"} ,
+		participants = {"EmailService", "AbstractEmailService", "SmtpEmailService"},
+		roleOfAnnotatedClass = "Abstraction"
+)
 public abstract class AbstractEmailService implements EmailService {
 
 	/**

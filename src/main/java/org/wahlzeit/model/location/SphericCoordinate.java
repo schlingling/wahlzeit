@@ -1,5 +1,7 @@
 package org.wahlzeit.model.location;
 
+import org.wahlzeit.utils.BehaviouralDesignPatternInstance;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -102,6 +104,12 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype query
      */
     @Override
+    @BehaviouralDesignPatternInstance(
+            patternName = "Template Method",
+            metaParticipants = {"Template Method", "Implementation Method"},
+            participants = {"getCartesianDistance()", "asCartesianDistance"},
+            roleOfAnnotatedMethod = "Implementation Method"
+    )
     public CartesianCoordinate asCartesianCoordinate()  {
         assertClassInvariants();
         double x, y, z;

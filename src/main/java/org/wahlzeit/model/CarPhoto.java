@@ -1,15 +1,15 @@
 package org.wahlzeit.model;
 
 
-import org.wahlzeit.utils.DesignPatternInstance;
+import org.wahlzeit.utils.CreationalDesignPatternInstance;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@DesignPatternInstance(
+@CreationalDesignPatternInstance(
         patternName = "Abstract Factory",
-        participants = {"Abstract Factory", "Abstract Product", "Concrete Factory", "Concrete Product"},
-        type = "creational",
+        metaParticipants = {"Abstract Factory", "Abstract Product", "Concrete Factory", "Concrete Product"},
+        participants = {"PhotoFactory", "Photo", "CarPhotoFactory", "CarPhoto"},
         roleOfAnnotatedClass = "Concrete Product"
 )
 public class CarPhoto extends Photo {
