@@ -38,16 +38,6 @@ public class CarPhotoTest {
         p1.setWidthAndHeight(100,100);
 
 
-        p1.setBuildYear(2020);
-        p1.setCarOEMName("Benz");
-
-        p2.setBuildYear(2015);
-        p2.setCarOEMName("Audi");
-
-        p3.setBuildYear(202222);
-        p3.setCarOEMName("asdfasdfasfdasdfafds");
-
-
         //ASSERT
         assertEquals(p1.getOwnerEmailAddress(),EmailAddress.getFromString("test@testmaail.com"));
         assertEquals( p1.getOwnerHomePage(),new URL("https://test.url"));
@@ -59,15 +49,6 @@ public class CarPhotoTest {
         assertEquals( p1.getWidth(),100);
         assertEquals(p1.getHeight(),100);
 
-
-        assertEquals(p1.getBuildYear(), 2020);
-        assertEquals(p2.getBuildYear(), 2015);
-        assertEquals(p3.getBuildYear(), 202222);
-
-
-        assertEquals(p1.getCarOEMName(), "Benz");
-        assertEquals(p2.getCarOEMName(), "Audi");
-        assertEquals(p3.getCarOEMName(), "asdfasdfasfdasdfafds");
 
     }
 
@@ -87,15 +68,6 @@ public class CarPhotoTest {
         p1.setWidthAndHeight(100,100);
 
 
-        p1.setBuildYear(2020);
-        p1.setCarOEMName("Benz");
-        p2.setBuildYear(2015);
-        p2.setCarOEMName("Audi");
-
-        p3.setBuildYear(202222);
-        p3.setCarOEMName("asdfasdfasfdasdfafds");
-
-
         //ASSERT
         assertEquals(EmailAddress.getFromString("test@testmaail.com"), p1.getOwnerEmailAddress());
         assertEquals(new URL("https://test.url"), p1.getOwnerHomePage());
@@ -107,25 +79,6 @@ public class CarPhotoTest {
         assertEquals(100, p1.getWidth());
         assertEquals(100, p1.getHeight());
 
-
-        assertEquals(2020, p1.getBuildYear());
-        assertEquals(2015,p2.getBuildYear());
-        assertEquals(202222, p3.getBuildYear());
-
-
-        assertEquals("Benz", p1.getCarOEMName());
-        assertEquals("Audi", p2.getCarOEMName());
-        assertEquals("asdfasdfasfdasdfafds", p3.getCarOEMName());
-
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testIllegalArgumentExceptions() {
-
-        //ARRANGE & ACT
-        p1.setBuildYear(-15823);
-        p1.setCarOEMName(null);
 
 
     }

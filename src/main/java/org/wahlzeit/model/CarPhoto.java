@@ -17,8 +17,7 @@ public class CarPhoto extends Photo {
     /**
      *
      */
-    private String carOEMName="Daimler-Benz";
-    private int buildYear =2020;
+
     Car car;
 
     /**
@@ -26,6 +25,9 @@ public class CarPhoto extends Photo {
      */
     public CarPhoto() {
         super();
+
+        //For Demopurposes using a default carType
+        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
     }
 
     /**
@@ -34,6 +36,8 @@ public class CarPhoto extends Photo {
     public CarPhoto(PhotoId myId) {
        super(myId);
 
+        //For Demopurposes using a default carType
+        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
     }
 
 
@@ -44,38 +48,11 @@ public class CarPhoto extends Photo {
      */
     public CarPhoto(ResultSet rset) throws SQLException {
         super(rset);
+
+        //For Demopurposes using a default carType
+        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
     }
 
-
-    /**
-     * @methodtype get
-     */
-    public String getCarOEMName(){
-        return carOEMName;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setCarOEMName(String s){
-        if (s==null)throw new IllegalArgumentException("Name must be set");
-        carOEMName=s;
-    }
-
-    /**
-     * @methodtype get
-     */
-    public int getBuildYear(){
-        return buildYear;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setBuildYear(int y){
-        if (y<=0)throw new IllegalArgumentException("Year must be a valid year");
-        buildYear=y;
-    }
 
     @Override
     public void writeOn(ResultSet rset) throws SQLException {
