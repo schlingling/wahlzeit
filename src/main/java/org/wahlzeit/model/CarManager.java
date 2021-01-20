@@ -10,16 +10,22 @@ import org.wahlzeit.services.Persistent;
 
 public class CarManager extends ObjectManager {
 
+    //Single Manager instance
     private static CarManager instance;
 
 
-    //Maps carTypes (type is carOEMName + model + buildYear)
+    //Tracks carTypes (unique carType is defined by its carOEMName + model + buildYear)
     private static HashMap<String, CarType> carTypes = new HashMap<>();
 
-    //Maps concrete cars
+    //Tracks concrete cars
     private static HashMap<Integer, Car> cars = new HashMap<>();
 
 
+    /**
+     *
+     * @methodtype constructor
+     * @return CarManager
+     */
     private CarManager() {
         carTypes = new HashMap<>();
         cars = new HashMap<>();
@@ -28,6 +34,11 @@ public class CarManager extends ObjectManager {
         carTypes.put("default", new CarType("defaultOEM", "defaultModel", 2020, this));
     }
 
+    /**
+     * Creates CarManagerinstance or returns it if already present
+     * @methodtype mutation
+     * @return CarManager
+     */
     public static final CarManager getInstance() {
         if (instance == null) {
             return new CarManager();
@@ -35,9 +46,16 @@ public class CarManager extends ObjectManager {
         return instance;
     }
 
-
+    /**
+     * Creates Carinstance and safes it for management reasons
+     * @methodtype mutation
+     * @return Car
+     */
     public Car createCar(String carOEMName, String model, int buildYear) {
-        //TODO assert
+        assertIsValidArgument(carOEMName);
+        assertIsValidArgument(model);
+        assertIsValidBuildYear(buildYear);
+
         CarType ct = getOrCreateCarType(carOEMName, model, buildYear);
         Car result = ct.createInstance(this);
         cars.put(result.hashCode(), result);
@@ -50,7 +68,14 @@ public class CarManager extends ObjectManager {
         return null;
     }
 
+    /**
+     * Generates CarType from OEMName, Model, buildyear if absent or returns it if present
+     * @methodtype get
+     * @return CarType
+     */
     protected static CarType getOrCreateCarType(String carOEMName, String model, int buildYear) {
+        staticAssertIsValidArgument(carOEMName);
+        staticAssertIsValidArgument(model);
         String carType = carOEMName + model + buildYear;
         if (!carTypes.containsKey(carType)) {
             CarType ct = new CarType(carOEMName, model, buildYear, instance);
@@ -58,5 +83,25 @@ public class CarManager extends ObjectManager {
         }
         return carTypes.get(carType);
     }
+
+    private static void staticAssertIsValidArgument(Object o){
+        if (o == null){
+            throw new IllegalArgumentException("Argument is null");
+        }
+    }
+
+    private void assertIsValidArgument(Object o){
+        if (o == null){
+            throw new IllegalArgumentException("Argument is null");
+        }
+    }
+
+    private void assertIsValidBuildYear(int i){
+        if (i<=0){
+            throw new IllegalArgumentException("Year has to be greater than 0");
+        }
+    }
+
+
 
 }
