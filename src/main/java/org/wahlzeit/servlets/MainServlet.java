@@ -84,9 +84,10 @@ public class MainServlet extends AbstractServlet {
 			us.addProcessingTime(System.currentTimeMillis() - startTime);
 		}
 	}
-	
+
 	/**
-	 * 
+	 * TRACING OF PHOTO & CAR INSTANTIATION
+	 * Schritt2: Neuer Post-Request kommt an
 	 */
 	public void myPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long startTime = System.currentTimeMillis();

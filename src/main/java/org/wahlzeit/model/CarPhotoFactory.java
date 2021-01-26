@@ -35,7 +35,18 @@ public class CarPhotoFactory extends PhotoFactory {
      *
      */
     public CarPhoto createPhoto(PhotoId id) {
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt3: returnt neue CarPhoto-Instanz
+         */
+
+
+
         return new CarPhoto(id);
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt 10: CarPhoto erfolgreich instanziiert
+         */
     }
 
     /**

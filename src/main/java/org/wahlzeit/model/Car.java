@@ -10,6 +10,11 @@ public class Car {
      * @methodtype constructor
      */
     public Car(CarType ct, CarManager m){
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt8: erstellt neues Auto-Objekt
+         */
+
         this.type=ct;
         this.manager=m;
 

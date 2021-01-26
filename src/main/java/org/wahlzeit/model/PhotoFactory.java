@@ -44,8 +44,18 @@ public class PhotoFactory {
 
     /**
      * Public singleton access method.
+     *
+     *
+     *
+     *
      */
     public static synchronized PhotoFactory getInstance() {
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt2: getInstance() returnt CarPhotoFactory-Instanz
+         */
+
+
         if (instance == null) {
             SysLog.logSysInfo("setting specific PhotoFactory");
             setInstance(new CarPhotoFactory());

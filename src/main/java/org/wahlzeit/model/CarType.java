@@ -35,6 +35,13 @@ public class CarType {
      * @methodtype mutation
      */
     public Car createInstance(CarManager manager) {
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt7: initilisiert Auto, indem Konstruktor der Car-Klasse genutzt wird
+         */
+
+
+
         assertClassInvariants();
         assertIsValidArgument(manager);
         this.carManager = manager;

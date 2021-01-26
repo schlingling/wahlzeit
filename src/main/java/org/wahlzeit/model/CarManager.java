@@ -40,6 +40,11 @@ public class CarManager extends ObjectManager {
      * @return CarManager
      */
     public static final CarManager getInstance() {
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt5: returnt CarManager-Singleton
+         */
+
         if (instance == null) {
             return new CarManager();
         }
@@ -52,6 +57,12 @@ public class CarManager extends ObjectManager {
      * @return Car
      */
     public Car createCar(String carOEMName, String model, int buildYear) {
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt6: überprüft, ob CarType existiert und legt diesen ggf. neu, delegiert weiter an CarType zur Erzeugung des Cars, speichert das Car in der Verwaltungsdatenstruktur cars
+         */
+
+
         assertIsValidArgument(carOEMName);
         assertIsValidArgument(model);
         assertIsValidBuildYear(buildYear);

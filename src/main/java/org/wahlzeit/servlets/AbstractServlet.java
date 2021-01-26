@@ -99,6 +99,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		if (ServiceMain.getInstance().isShuttingDown() || (us == null)) {
 			displayNullPage(request, response);
 		} else {
+
 			myPost(request, response);
 			us.returnDatabaseConnection();
 		}

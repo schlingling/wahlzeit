@@ -65,6 +65,9 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 			PhotoManager pm = PhotoManager.getInstance();
 			String sourceFileName = us.getAsString(args, "fileName");
 			File file = new File(sourceFileName);
+
+
+
 			Photo photo = pm.createPhoto(file);
 
 			String targetFileName = SysConfig.getBackupDir().asString() + photo.getId().asString();

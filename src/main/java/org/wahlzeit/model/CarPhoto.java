@@ -36,8 +36,18 @@ public class CarPhoto extends Photo {
     public CarPhoto(PhotoId myId) {
        super(myId);
 
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt4: Über den CarManager-Singleton wird ein neues Car erzeugt
+         */
+
         //For Demopurposes using a default carType
         CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
+
+        /**
+         * TRACING OF PHOTO & CAR INSTANTIATION
+         * Schritt9: Instanz-Attribut car erfolgreich initialisiert
+         */
     }
 
 

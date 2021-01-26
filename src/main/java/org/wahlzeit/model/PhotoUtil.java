@@ -37,7 +37,19 @@ public class PhotoUtil {
 	 * 
 	 */
 	public static Photo createPhoto(File source, PhotoId id) throws Exception {
+
+
+		/**
+		 * TRACING OF PHOTO & CAR INSTANTIATION
+		 * Schritt1: Auf dem Singleton der Domänenclassen-Fabrik wird Aufruf an Domänenclassen-Fabrik deligiert
+		 */
 		Photo result = CarPhotoFactory.getInstance().createPhoto(id);
+
+		/**
+		 * TRACING OF PHOTO & CAR INSTANTIATION
+		 * Schritt 11: result-Photo erfolgreich initialisiert
+		 */
+
 		
 		Image sourceImage = createImageFiles(source, id);
 
