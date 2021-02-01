@@ -27,7 +27,7 @@ public class CarPhoto extends Photo {
         super();
 
         //For Demopurposes using a default carType
-        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
+       this.car= CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
     }
 
     /**
@@ -42,7 +42,7 @@ public class CarPhoto extends Photo {
          */
 
         //For Demopurposes using a default carType
-        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
+        this.car= CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
 
         /**
          * TRACING OF PHOTO & CAR INSTANTIATION
@@ -60,7 +60,7 @@ public class CarPhoto extends Photo {
         super(rset);
 
         //For Demopurposes using a default carType
-        CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
+        this.car= CarManager.getInstance().createCar("defaultOEM", "defaultModel", 2020);
     }
 
 
